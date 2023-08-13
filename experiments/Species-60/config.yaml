@@ -1,14 +1,9 @@
 version: v1.0.0
 random_seed: 133
-port: 11112
+port: 30000
 
 dataset:
   type: custom
-
-  wandb:
-    use_wandb: True
-    log_project: Species_UniAD_train
-
 
   image_reader:
     type: opencv
@@ -39,7 +34,7 @@ criterion:
       weight: 1.0
 
 trainer:
-  max_epoch: 1000
+  max_epoch: 100
   clip_max_norm: 0.1
   val_freq_epoch: 10
   print_freq_step: 1
@@ -118,6 +113,6 @@ net:
           neighbor_size: [7,7]
           mask: [True, True, True] # whether use mask in [enc, dec1, dec2]
         save_recon:
-          save_dir: result_recon
+          save_dir: /home/data/Weight/sy_uniad/result_recon
         initializer:
           method: xavier_uniform
