@@ -30,14 +30,10 @@ from utils.misc_helper import (
 from utils.optimizer_helper import get_optimizer
 from utils.vis_helper import visualize_compound, visualize_single
 
-import wandb
-
 parser = argparse.ArgumentParser(description="UniAD Framework")
 parser.add_argument("--config", default="./config.yaml")
 parser.add_argument("-e", "--evaluate", action="store_true")
 parser.add_argument("--local_rank", default=None, help="local rank for dist")
-parser.add_argument("--wandb", action="store_true")
-parser.add_argument("--log_project", type=str, default="project")
 
 
 def main():
@@ -55,10 +51,6 @@ def main():
     config.save_path = os.path.join(config.exp_path, config.saver.save_dir)
     config.log_path = os.path.join(config.exp_path, config.saver.log_dir)
     config.evaluator.eval_dir = os.path.join(config.exp_path, config.evaluator.save_dir)
-    
-    if args.wandb and config.wandb.use_wandb :
-        wandb.init(project=config.wandb.log_project, config=config)
-        
     if rank == 0:
         os.makedirs(config.save_path, exist_ok=True)
         os.makedirs(config.log_path, exist_ok=True)
@@ -159,6 +151,10 @@ def main():
                 ret_key_metric = ret_metrics[key_metric]
                 is_best = ret_key_metric >= best_metric
                 best_metric = max(ret_key_metric, best_metric)
+                
+                # Save checkpoint with epoch number in the filename
+                checkpoint_name = "epoch_{}.pth.tar".format(epoch + 1)
+                os.makedirs(config.save_path, exist_ok=True)
                 save_checkpoint(
                     {
                         "epoch": epoch + 1,
@@ -169,10 +165,8 @@ def main():
                     },
                     is_best,
                     config,
+                    checkpoint_name=checkpoint_name,  
                 )
-                
-                if args.wandb:
-                    wandb.run.summary["best_metric"] = best_metric
 
 
 def train_one_epoch(
@@ -238,10 +232,6 @@ def train_one_epoch(
             tb_logger.add_scalar("lr", current_lr, curr_step + 1)
             tb_logger.flush()
 
-            if args.wandb:
-                # Log training metrics using WandB
-                wandb.log({"train_loss": losses.avg, "learning_rate": current_lr}, step=curr_step)
-
             logger.info(
                 "Epoch: [{0}/{1}]\t"
                 "Iter: [{2}/{3}]\t"
@@ -261,7 +251,6 @@ def train_one_epoch(
             )
 
         end = time.time()
-
 
 
 def validate(val_loader, model):
