@@ -272,8 +272,8 @@ def validate(val_loader, model):
         for i, input in enumerate(val_loader):
             # forward
             outputs = model(input)
-            dump(config.evaluator.eval_dir, outputs)
-
+            # dump(config.evaluator.eval_dir, outputs)
+            print(next(model.parameters()).device)
             # record loss
             loss = 0
             for name, criterion_loss in criterion.items():
@@ -304,6 +304,7 @@ def validate(val_loader, model):
     ret_metrics = {}  # only ret_metrics on rank0 is not empty
     if rank == 0:
         logger.info("Gathering final results ...")
+        print(next(model.parameters()).device)
         # total loss
         logger.info(" * Loss {:.5f}\ttotal_num={}".format(final_loss, total_num.item()))
         fileinfos, preds, masks = merge_together(config.evaluator.eval_dir)
