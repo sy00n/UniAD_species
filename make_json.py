@@ -1,7 +1,7 @@
 import os
 import json
 
-dataset_root ='/home/data/Dataset/Anomaly_Detection/Image/Species-60'
+dataset_root ='/home/data/yujin/Species/Species-60_MC'
 output_dir = '/home/workspace/UniAD/data/Species-60'
 class_json_output_dir = '/home/workspace/UniAD/data/Species-60/json_vis_decoder'
 

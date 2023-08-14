@@ -8,7 +8,7 @@ dataset:
   image_reader:
     type: opencv
     kwargs:
-      image_dir: '/home/data/Dataset/Anomaly_Detection/Image/Species-60'
+      image_dir: '/home/data/Species/Species-60_MC'
       color_mode: RGB
 
   train:
@@ -34,7 +34,7 @@ criterion:
       weight: 1.0
 
 trainer:
-  max_epoch: 100
+  max_epoch: 1000
   clip_max_norm: 0.1
   val_freq_epoch: 10
   print_freq_step: 1
@@ -59,7 +59,7 @@ saver:
   log_dir: /home/data/Weight/sy_uniad/log/
 
 evaluator:
-  save_dir: /home/data/Weight/sy_uniad/result_eval_temp
+  save_dir: /home/data/Weight/sy_uniad/result_eval_temp2
   key_metric: mean_pixel_auc
   metrics:
     auc:
@@ -113,6 +113,6 @@ net:
           neighbor_size: [7,7]
           mask: [True, True, True] # whether use mask in [enc, dec1, dec2]
         save_recon:
-          save_dir: /home/data/Weight/sy_uniad/result_recon
+          save_dir: /home/data/Weight/sy_uniad/result_recon2
         initializer:
           method: xavier_uniform

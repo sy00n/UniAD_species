@@ -1,0 +1,1020 @@
+/usr/local/lib/python3.8/dist-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[2023-08-14 17:38:37,244][   train_val.py][line:  63][    INFO] args: Namespace(config='./config.yaml', evaluate=False, local_rank='0')
+[2023-08-14 17:38:37,246][   train_val.py][line:  64][    INFO] config: {'criterion': [{'kwargs': {'weight': 1.0},
+                'name': 'FeatureMSELoss',
+                'type': 'FeatureMSELoss'}],
+ 'dataset': {'batch_size': 8,
+             'image_reader': {'kwargs': {'color_mode': 'RGB',
+                                         'image_dir': '/home/data/Species/Species-60_MC'},
+                              'type': 'opencv'},
+             'input_size': [224, 224],
+             'pixel_mean': [0.485, 0.456, 0.406],
+             'pixel_std': [0.229, 0.224, 0.225],
+             'test': {'meta_file': '/home/workspace/UniAD/data/Species-60/test.json'},
+             'train': {'hflip': False,
+                       'meta_file': '/home/workspace/UniAD/data/Species-60/train.json',
+                       'rebalance': False,
+                       'rotate': False,
+                       'vflip': False},
+             'type': 'custom',
+             'workers': 4},
+ 'evaluator': {'eval_dir': '/home/data/Weight/sy_uniad/result_eval_temp2',
+               'key_metric': 'mean_pixel_auc',
+               'metrics': {'auc': [{'name': 'std'},
+                                   {'kwargs': {'avgpool_size': [16, 16]},
+                                    'name': 'max'},
+                                   {'name': 'pixel'}]},
+               'save_dir': '/home/data/Weight/sy_uniad/result_eval_temp2',
+               'vis_compound': {'max_score': None,
+                                'min_score': None,
+                                'save_dir': '/home/data/Weight/sy_uniad/vis_compound'}},
+ 'exp_path': '.',
+ 'frozen_layers': ['backbone'],
+ 'log_path': '/home/data/Weight/sy_uniad/log/',
+ 'net': [{'frozen': True,
+          'kwargs': {'outblocks': [1, 5, 9, 21],
+                     'outstrides': [2, 4, 8, 16],
+                     'pretrained': True},
+          'name': 'backbone',
+          'type': 'models.backbones.efficientnet_b4'},
+         {'kwargs': {'outplanes': [272], 'outstrides': [16]},
+          'name': 'neck',
+          'prev': 'backbone',
+          'type': 'models.necks.MFCN'},
+         {'kwargs': {'activation': 'relu',
+                     'dim_feedforward': 1024,
+                     'dropout': 0.1,
+                     'feature_jitter': {'prob': 1.0, 'scale': 20.0},
+                     'feature_size': [14, 14],
+                     'hidden_dim': 256,
+                     'initializer': {'method': 'xavier_uniform'},
+                     'neighbor_mask': {'mask': [True, True, True],
+                                       'neighbor_size': [7, 7]},
+                     'nhead': 8,
+                     'normalize_before': False,
+                     'num_decoder_layers': 4,
+                     'num_encoder_layers': 4,
+                     'pos_embed_type': 'learned',
+                     'save_recon': {'save_dir': '/home/data/Weight/sy_uniad/result_recon2'}},
+          'name': 'reconstruction',
+          'prev': 'neck',
+          'type': 'models.reconstructions.UniAD'}],
+ 'port': 30000,
+ 'random_seed': 133,
+ 'save_path': '/home/data/Weight/sy_uniad/checkpoints/',
+ 'saver': {'always_save': False,
+           'auto_resume': False,
+           'load_path': '/home/data/Weight/sy_uniad/checkpoints/ckpt.pth.tar',
+           'log_dir': '/home/data/Weight/sy_uniad/log/',
+           'save_dir': '/home/data/Weight/sy_uniad/checkpoints/'},
+ 'trainer': {'clip_max_norm': 0.1,
+             'lr_scheduler': {'kwargs': {'gamma': 0.1, 'step_size': 800},
+                              'type': 'StepLR'},
+             'max_epoch': 1000,
+             'optimizer': {'kwargs': {'betas': [0.9, 0.999],
+                                      'lr': 0.0001,
+                                      'weight_decay': 0.0001},
+                           'type': 'AdamW'},
+             'print_freq_step': 1,
+             'tb_freq_step': 1,
+             'val_freq_epoch': 10},
+ 'version': 'v1.0.0'}
+[2023-08-14 17:38:37,797][       utils.py][line: 740][    INFO]  not exist, load from https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/efficientnet-b4-6ed6700e.pth
+[2023-08-14 17:38:37,897][       utils.py][line: 761][    INFO] Loaded ImageNet pretrained efficientnet-b4
+[2023-08-14 17:38:41,035][   train_val.py][line:  90][    INFO] layers: ['backbone', 'neck', 'reconstruction']
+[2023-08-14 17:38:41,036][   train_val.py][line:  91][    INFO] active layers: ['reconstruction', 'neck']
+=> no checkpoint found at '/home/data/Weight/sy_uniad/checkpoints/ckpt.pth.tar'
+[2023-08-14 17:38:41,037][custom_dataset.py][line:  36][    INFO] building CustomDataset from: /home/workspace/UniAD/data/Species-60/train.json
+[2023-08-14 17:38:41,146][custom_dataset.py][line:  36][    INFO] building CustomDataset from: /home/workspace/UniAD/data/Species-60/test.json
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:371: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:371: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:371: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:371: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+[2023-08-14 17:38:44,391][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [1/1266000]	Time 3.20 (3.20)	Data 0.93 (0.93)	Loss 38.08847 (38.08847)	LR 0.00010	
+[2023-08-14 17:38:44,495][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [2/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 37.58119 (37.58119)	LR 0.00010	
+[2023-08-14 17:38:44,601][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [3/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 35.58348 (35.58348)	LR 0.00010	
+[2023-08-14 17:38:44,720][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [4/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 36.00799 (36.00799)	LR 0.00010	
+[2023-08-14 17:38:44,846][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [5/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 35.43325 (35.43325)	LR 0.00010	
+[2023-08-14 17:38:44,949][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [6/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 36.00340 (36.00340)	LR 0.00010	
+[2023-08-14 17:38:45,070][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [7/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 34.58530 (34.58530)	LR 0.00010	
+[2023-08-14 17:38:45,207][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [8/1266000]	Time 0.14 (0.14)	Data 0.00 (0.00)	Loss 34.84557 (34.84557)	LR 0.00010	
+[2023-08-14 17:38:45,327][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [9/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 34.48617 (34.48617)	LR 0.00010	
+[2023-08-14 17:38:45,462][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [10/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 35.41300 (35.41300)	LR 0.00010	
+[2023-08-14 17:38:45,576][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [11/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.87486 (32.87486)	LR 0.00010	
+[2023-08-14 17:38:45,702][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [12/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 34.07626 (34.07626)	LR 0.00010	
+[2023-08-14 17:38:45,813][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [13/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 34.32764 (34.32764)	LR 0.00010	
+[2023-08-14 17:38:45,920][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [14/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 34.09182 (34.09182)	LR 0.00010	
+[2023-08-14 17:38:46,042][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [15/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 33.96950 (33.96950)	LR 0.00010	
+[2023-08-14 17:38:46,180][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [16/1266000]	Time 0.14 (0.14)	Data 0.00 (0.00)	Loss 32.09859 (32.09859)	LR 0.00010	
+[2023-08-14 17:38:46,293][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [17/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 34.55729 (34.55729)	LR 0.00010	
+[2023-08-14 17:38:46,404][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [18/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 33.10122 (33.10122)	LR 0.00010	
+[2023-08-14 17:38:46,521][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [19/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 33.32352 (33.32352)	LR 0.00010	
+[2023-08-14 17:38:46,636][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [20/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 33.19531 (33.19531)	LR 0.00010	
+[2023-08-14 17:38:46,751][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [21/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 33.18674 (33.18674)	LR 0.00010	
+[2023-08-14 17:38:46,866][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [22/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 33.36278 (33.36278)	LR 0.00010	
+[2023-08-14 17:38:46,990][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [23/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 33.49950 (33.49950)	LR 0.00010	
+[2023-08-14 17:38:47,122][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [24/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 31.52878 (31.52878)	LR 0.00010	
+[2023-08-14 17:38:47,251][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [25/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 32.51564 (32.51564)	LR 0.00010	
+[2023-08-14 17:38:47,363][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [26/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 33.76586 (33.76586)	LR 0.00010	
+[2023-08-14 17:38:47,471][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [27/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.55953 (32.55953)	LR 0.00010	
+[2023-08-14 17:38:47,597][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [28/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 32.58203 (32.58203)	LR 0.00010	
+[2023-08-14 17:38:47,718][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [29/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 33.36441 (33.36441)	LR 0.00010	
+[2023-08-14 17:38:47,829][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [30/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 33.10027 (33.10027)	LR 0.00010	
+[2023-08-14 17:38:47,947][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [31/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 32.83150 (32.83150)	LR 0.00010	
+[2023-08-14 17:38:48,065][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [32/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 33.21385 (33.21385)	LR 0.00010	
+[2023-08-14 17:38:48,174][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [33/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.93631 (32.93631)	LR 0.00010	
+[2023-08-14 17:38:48,286][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [34/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.22689 (32.22689)	LR 0.00010	
+[2023-08-14 17:38:48,400][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [35/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.81270 (31.81270)	LR 0.00010	
+[2023-08-14 17:38:48,526][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [36/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 32.16074 (32.16074)	LR 0.00010	
+[2023-08-14 17:38:48,636][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [37/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 33.22985 (33.22985)	LR 0.00010	
+[2023-08-14 17:38:48,755][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [38/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 32.53441 (32.53441)	LR 0.00010	
+[2023-08-14 17:38:48,884][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [39/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 31.61732 (31.61732)	LR 0.00010	
+[2023-08-14 17:38:49,019][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [40/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 32.50646 (32.50646)	LR 0.00010	
+[2023-08-14 17:38:49,133][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [41/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.49627 (32.49627)	LR 0.00010	
+[2023-08-14 17:38:49,253][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [42/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 32.49897 (32.49897)	LR 0.00010	
+[2023-08-14 17:38:49,360][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [43/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.37571 (32.37571)	LR 0.00010	
+[2023-08-14 17:38:49,490][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [44/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 31.33551 (31.33551)	LR 0.00010	
+[2023-08-14 17:38:49,616][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [45/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 32.56204 (32.56204)	LR 0.00010	
+[2023-08-14 17:38:49,725][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [46/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.31727 (32.31727)	LR 0.00010	
+[2023-08-14 17:38:49,841][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [47/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.54330 (31.54330)	LR 0.00010	
+[2023-08-14 17:38:49,960][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [48/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.91445 (31.91445)	LR 0.00010	
+[2023-08-14 17:38:50,100][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [49/1266000]	Time 0.14 (0.14)	Data 0.00 (0.00)	Loss 32.70298 (32.70298)	LR 0.00010	
+[2023-08-14 17:38:50,215][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [50/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.26274 (31.26274)	LR 0.00010	
+[2023-08-14 17:38:50,317][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [51/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 31.50496 (31.50496)	LR 0.00010	
+[2023-08-14 17:38:50,440][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [52/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 32.62122 (32.62122)	LR 0.00010	
+[2023-08-14 17:38:50,560][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [53/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 32.33443 (32.33443)	LR 0.00010	
+[2023-08-14 17:38:50,669][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [54/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.69510 (31.69510)	LR 0.00010	
+[2023-08-14 17:38:50,791][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [55/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 32.46375 (32.46375)	LR 0.00010	
+[2023-08-14 17:38:50,924][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [56/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 31.72329 (31.72329)	LR 0.00010	
+[2023-08-14 17:38:51,054][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [57/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 31.50608 (31.50608)	LR 0.00010	
+[2023-08-14 17:38:51,171][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [58/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.60382 (31.60382)	LR 0.00010	
+[2023-08-14 17:38:51,287][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [59/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.48736 (31.48736)	LR 0.00010	
+[2023-08-14 17:38:51,400][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [60/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.02331 (32.02331)	LR 0.00010	
+[2023-08-14 17:38:51,525][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [61/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.86377 (31.86377)	LR 0.00010	
+[2023-08-14 17:38:51,645][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [62/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.11855 (31.11855)	LR 0.00010	
+[2023-08-14 17:38:51,755][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [63/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.34726 (32.34726)	LR 0.00010	
+[2023-08-14 17:38:51,865][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [64/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.99633 (31.99633)	LR 0.00010	
+[2023-08-14 17:38:51,984][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [65/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.52934 (31.52934)	LR 0.00010	
+[2023-08-14 17:38:52,097][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [66/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.67307 (31.67307)	LR 0.00010	
+[2023-08-14 17:38:52,213][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [67/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.86989 (31.86989)	LR 0.00010	
+[2023-08-14 17:38:52,342][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [68/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 32.08377 (32.08377)	LR 0.00010	
+[2023-08-14 17:38:52,459][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [69/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.23009 (31.23009)	LR 0.00010	
+[2023-08-14 17:38:52,588][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [70/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 31.46436 (31.46436)	LR 0.00010	
+[2023-08-14 17:38:52,708][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [71/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.02878 (31.02878)	LR 0.00010	
+[2023-08-14 17:38:52,828][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [72/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.73049 (31.73049)	LR 0.00010	
+[2023-08-14 17:38:52,956][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [73/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 31.62784 (31.62784)	LR 0.00010	
+[2023-08-14 17:38:53,080][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [74/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 32.29551 (32.29551)	LR 0.00010	
+[2023-08-14 17:38:53,211][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [75/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 31.38959 (31.38959)	LR 0.00010	
+[2023-08-14 17:38:53,321][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [76/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.94883 (30.94883)	LR 0.00010	
+[2023-08-14 17:38:53,442][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [77/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.09691 (31.09691)	LR 0.00010	
+[2023-08-14 17:38:53,552][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [78/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.15870 (32.15870)	LR 0.00010	
+[2023-08-14 17:38:53,659][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [79/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.16701 (31.16701)	LR 0.00010	
+[2023-08-14 17:38:53,780][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [80/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.20067 (31.20067)	LR 0.00010	
+[2023-08-14 17:38:53,900][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [81/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.41497 (31.41497)	LR 0.00010	
+[2023-08-14 17:38:54,011][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [82/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.95078 (30.95078)	LR 0.00010	
+[2023-08-14 17:38:54,126][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [83/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.97800 (30.97800)	LR 0.00010	
+[2023-08-14 17:38:54,250][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [84/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.09010 (31.09010)	LR 0.00010	
+[2023-08-14 17:38:54,358][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [85/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.72791 (31.72791)	LR 0.00010	
+[2023-08-14 17:38:54,484][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [86/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 30.62151 (30.62151)	LR 0.00010	
+[2023-08-14 17:38:54,603][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [87/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.34509 (31.34509)	LR 0.00010	
+[2023-08-14 17:38:54,728][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [88/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.39915 (31.39915)	LR 0.00010	
+[2023-08-14 17:38:54,837][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [89/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.72104 (30.72104)	LR 0.00010	
+[2023-08-14 17:38:54,960][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [90/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.37176 (31.37176)	LR 0.00010	
+[2023-08-14 17:38:55,084][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [91/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.23509 (31.23509)	LR 0.00010	
+[2023-08-14 17:38:55,197][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [92/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.14177 (31.14177)	LR 0.00010	
+[2023-08-14 17:38:55,302][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [93/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 30.33643 (30.33643)	LR 0.00010	
+[2023-08-14 17:38:55,427][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [94/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.42270 (31.42270)	LR 0.00010	
+[2023-08-14 17:38:55,545][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [95/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.53354 (30.53354)	LR 0.00010	
+[2023-08-14 17:38:55,661][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [96/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.83147 (30.83147)	LR 0.00010	
+[2023-08-14 17:38:55,784][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [97/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.76188 (30.76188)	LR 0.00010	
+[2023-08-14 17:38:55,901][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [98/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.03504 (31.03504)	LR 0.00010	
+[2023-08-14 17:38:56,024][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [99/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.84940 (30.84940)	LR 0.00010	
+[2023-08-14 17:38:56,132][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [100/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.82260 (29.82260)	LR 0.00010	
+[2023-08-14 17:38:56,254][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [101/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.14689 (31.14689)	LR 0.00010	
+[2023-08-14 17:38:56,362][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [102/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.51966 (30.51966)	LR 0.00010	
+[2023-08-14 17:38:56,469][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [103/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 31.61124 (31.61124)	LR 0.00010	
+[2023-08-14 17:38:56,596][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [104/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 29.92059 (29.92059)	LR 0.00010	
+[2023-08-14 17:38:56,719][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [105/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.78940 (30.78940)	LR 0.00010	
+[2023-08-14 17:38:56,842][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [106/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.63097 (30.63097)	LR 0.00010	
+[2023-08-14 17:38:56,969][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [107/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 31.16661 (31.16661)	LR 0.00010	
+[2023-08-14 17:38:57,082][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [108/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.40717 (30.40717)	LR 0.00010	
+[2023-08-14 17:38:57,196][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [109/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.84103 (31.84103)	LR 0.00010	
+[2023-08-14 17:38:57,312][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [110/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.47353 (30.47353)	LR 0.00010	
+[2023-08-14 17:38:57,422][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [111/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.91830 (29.91830)	LR 0.00010	
+[2023-08-14 17:38:57,533][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [112/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.17178 (31.17178)	LR 0.00010	
+[2023-08-14 17:38:57,650][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [113/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.02239 (31.02239)	LR 0.00010	
+[2023-08-14 17:38:57,770][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [114/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.98056 (30.98056)	LR 0.00010	
+[2023-08-14 17:38:57,894][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [115/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.40577 (30.40577)	LR 0.00010	
+[2023-08-14 17:38:58,019][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [116/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.71460 (31.71460)	LR 0.00010	
+[2023-08-14 17:38:58,131][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [117/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.48837 (30.48837)	LR 0.00010	
+[2023-08-14 17:38:58,255][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [118/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.24402 (31.24402)	LR 0.00010	
+[2023-08-14 17:38:58,367][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [119/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.26132 (31.26132)	LR 0.00010	
+[2023-08-14 17:38:58,475][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [120/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.24645 (31.24645)	LR 0.00010	
+[2023-08-14 17:38:58,592][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [121/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.43521 (31.43521)	LR 0.00010	
+[2023-08-14 17:38:58,700][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [122/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.58984 (30.58984)	LR 0.00010	
+[2023-08-14 17:38:58,825][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [123/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.32376 (31.32376)	LR 0.00010	
+[2023-08-14 17:38:58,953][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [124/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 30.04146 (30.04146)	LR 0.00010	
+[2023-08-14 17:38:59,058][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [125/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 30.29872 (30.29872)	LR 0.00010	
+[2023-08-14 17:38:59,168][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [126/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.24623 (30.24623)	LR 0.00010	
+[2023-08-14 17:38:59,283][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [127/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.16870 (31.16870)	LR 0.00010	
+[2023-08-14 17:38:59,399][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [128/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.91719 (30.91719)	LR 0.00010	
+[2023-08-14 17:38:59,513][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [129/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.50717 (29.50717)	LR 0.00010	
+[2023-08-14 17:38:59,624][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [130/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.78900 (30.78900)	LR 0.00010	
+[2023-08-14 17:38:59,757][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [131/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 30.63727 (30.63727)	LR 0.00010	
+[2023-08-14 17:38:59,861][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [132/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 30.29964 (30.29964)	LR 0.00010	
+[2023-08-14 17:38:59,990][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [133/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 30.32017 (30.32017)	LR 0.00010	
+[2023-08-14 17:39:00,108][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [134/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.87335 (28.87335)	LR 0.00010	
+[2023-08-14 17:39:00,214][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [135/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.59259 (30.59259)	LR 0.00010	
+[2023-08-14 17:39:00,329][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [136/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.33143 (31.33143)	LR 0.00010	
+[2023-08-14 17:39:00,443][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [137/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.27753 (31.27753)	LR 0.00010	
+[2023-08-14 17:39:00,559][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [138/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.94879 (30.94879)	LR 0.00010	
+[2023-08-14 17:39:00,671][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [139/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.26447 (30.26447)	LR 0.00010	
+[2023-08-14 17:39:00,787][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [140/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.73982 (30.73982)	LR 0.00010	
+[2023-08-14 17:39:00,901][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [141/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.32670 (30.32670)	LR 0.00010	
+[2023-08-14 17:39:01,015][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [142/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.58166 (30.58166)	LR 0.00010	
+[2023-08-14 17:39:01,130][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [143/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.54418 (29.54418)	LR 0.00010	
+[2023-08-14 17:39:01,245][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [144/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.52965 (30.52965)	LR 0.00010	
+[2023-08-14 17:39:01,369][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [145/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.74800 (30.74800)	LR 0.00010	
+[2023-08-14 17:39:01,496][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [146/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 30.88906 (30.88906)	LR 0.00010	
+[2023-08-14 17:39:01,619][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [147/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.41408 (31.41408)	LR 0.00010	
+[2023-08-14 17:39:01,751][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [148/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 30.68213 (30.68213)	LR 0.00010	
+[2023-08-14 17:39:01,864][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [149/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.07282 (31.07282)	LR 0.00010	
+[2023-08-14 17:39:01,996][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [150/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 31.56456 (31.56456)	LR 0.00010	
+[2023-08-14 17:39:02,114][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [151/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.52836 (30.52836)	LR 0.00010	
+[2023-08-14 17:39:02,234][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [152/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.96241 (30.96241)	LR 0.00010	
+[2023-08-14 17:39:02,351][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [153/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.62335 (30.62335)	LR 0.00010	
+[2023-08-14 17:39:02,474][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [154/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.66043 (30.66043)	LR 0.00010	
+[2023-08-14 17:39:02,597][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [155/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.15331 (30.15331)	LR 0.00010	
+[2023-08-14 17:39:02,712][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [156/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.13755 (31.13755)	LR 0.00010	
+[2023-08-14 17:39:02,832][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [157/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.97478 (30.97478)	LR 0.00010	
+[2023-08-14 17:39:02,948][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [158/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.52519 (29.52519)	LR 0.00010	
+[2023-08-14 17:39:03,079][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [159/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 30.01242 (30.01242)	LR 0.00010	
+[2023-08-14 17:39:03,210][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [160/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 30.58982 (30.58982)	LR 0.00010	
+[2023-08-14 17:39:03,329][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [161/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.66117 (30.66117)	LR 0.00010	
+[2023-08-14 17:39:03,444][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [162/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.10448 (31.10448)	LR 0.00010	
+[2023-08-14 17:39:03,558][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [163/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.39187 (30.39187)	LR 0.00010	
+[2023-08-14 17:39:03,679][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [164/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.81018 (30.81018)	LR 0.00010	
+[2023-08-14 17:39:03,803][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [165/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.34172 (30.34172)	LR 0.00010	
+[2023-08-14 17:39:03,911][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [166/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.11140 (30.11140)	LR 0.00010	
+[2023-08-14 17:39:04,023][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [167/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.38640 (30.38640)	LR 0.00010	
+[2023-08-14 17:39:04,135][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [168/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.27688 (31.27688)	LR 0.00010	
+[2023-08-14 17:39:04,249][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [169/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.01082 (30.01082)	LR 0.00010	
+[2023-08-14 17:39:04,359][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [170/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 31.62454 (31.62454)	LR 0.00010	
+[2023-08-14 17:39:04,481][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [171/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.28744 (30.28744)	LR 0.00010	
+[2023-08-14 17:39:04,583][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [172/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 31.09625 (31.09625)	LR 0.00010	
+[2023-08-14 17:39:04,708][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [173/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.33827 (30.33827)	LR 0.00010	
+[2023-08-14 17:39:04,826][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [174/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.47019 (29.47019)	LR 0.00010	
+[2023-08-14 17:39:04,938][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [175/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.12775 (30.12775)	LR 0.00010	
+[2023-08-14 17:39:05,044][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [176/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.63234 (29.63234)	LR 0.00010	
+[2023-08-14 17:39:05,155][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [177/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.29865 (30.29865)	LR 0.00010	
+[2023-08-14 17:39:05,272][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [178/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.29105 (29.29105)	LR 0.00010	
+[2023-08-14 17:39:05,396][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [179/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.53097 (30.53097)	LR 0.00010	
+[2023-08-14 17:39:05,518][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [180/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.18426 (30.18426)	LR 0.00010	
+[2023-08-14 17:39:05,625][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [181/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.61513 (29.61513)	LR 0.00010	
+[2023-08-14 17:39:05,723][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [182/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 30.12229 (30.12229)	LR 0.00010	
+[2023-08-14 17:39:05,838][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [183/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.04885 (30.04885)	LR 0.00010	
+[2023-08-14 17:39:05,963][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [184/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.57763 (29.57763)	LR 0.00010	
+[2023-08-14 17:39:06,080][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [185/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.57022 (30.57022)	LR 0.00010	
+[2023-08-14 17:39:06,186][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [186/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.36305 (29.36305)	LR 0.00010	
+[2023-08-14 17:39:06,289][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [187/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 30.51889 (30.51889)	LR 0.00010	
+[2023-08-14 17:39:06,397][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [188/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.70935 (30.70935)	LR 0.00010	
+[2023-08-14 17:39:06,809][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [189/1266000]	Time 0.41 (0.41)	Data 0.00 (0.00)	Loss 29.38068 (29.38068)	LR 0.00010	
+[2023-08-14 17:39:07,051][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [190/1266000]	Time 0.24 (0.24)	Data 0.00 (0.00)	Loss 30.14935 (30.14935)	LR 0.00010	
+[2023-08-14 17:39:07,737][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [191/1266000]	Time 0.69 (0.69)	Data 0.00 (0.00)	Loss 30.49979 (30.49979)	LR 0.00010	
+[2023-08-14 17:39:07,854][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [192/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.20538 (30.20538)	LR 0.00010	
+[2023-08-14 17:39:07,972][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [193/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.32145 (31.32145)	LR 0.00010	
+[2023-08-14 17:39:08,609][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [194/1266000]	Time 0.64 (0.64)	Data 0.00 (0.00)	Loss 30.03777 (30.03777)	LR 0.00010	
+[2023-08-14 17:39:08,713][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [195/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.70288 (29.70288)	LR 0.00010	
+[2023-08-14 17:39:08,817][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [196/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.70329 (29.70329)	LR 0.00010	
+[2023-08-14 17:39:08,923][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [197/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.49797 (29.49797)	LR 0.00010	
+[2023-08-14 17:39:10,524][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [198/1266000]	Time 1.60 (1.60)	Data 0.00 (0.00)	Loss 28.95082 (28.95082)	LR 0.00010	
+[2023-08-14 17:39:10,651][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [199/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 29.88867 (29.88867)	LR 0.00010	
+[2023-08-14 17:39:10,777][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [200/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 31.13730 (31.13730)	LR 0.00010	
+[2023-08-14 17:39:10,887][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [201/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.98027 (30.98027)	LR 0.00010	
+[2023-08-14 17:39:11,602][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [202/1266000]	Time 0.71 (0.71)	Data 0.00 (0.00)	Loss 29.97902 (29.97902)	LR 0.00010	
+[2023-08-14 17:39:11,707][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [203/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.72279 (29.72279)	LR 0.00010	
+[2023-08-14 17:39:11,815][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [204/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.18097 (30.18097)	LR 0.00010	
+[2023-08-14 17:39:11,911][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [205/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.49616 (29.49616)	LR 0.00010	
+[2023-08-14 17:39:12,660][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [206/1266000]	Time 0.75 (0.75)	Data 0.00 (0.00)	Loss 30.35741 (30.35741)	LR 0.00010	
+[2023-08-14 17:39:12,775][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [207/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.32482 (30.32482)	LR 0.00010	
+[2023-08-14 17:39:12,914][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [208/1266000]	Time 0.14 (0.14)	Data 0.00 (0.00)	Loss 29.95001 (29.95001)	LR 0.00010	
+[2023-08-14 17:39:13,037][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [209/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.25272 (30.25272)	LR 0.00010	
+[2023-08-14 17:39:13,960][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [210/1266000]	Time 0.92 (0.92)	Data 0.00 (0.00)	Loss 30.10428 (30.10428)	LR 0.00010	
+[2023-08-14 17:39:14,076][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [211/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.29164 (29.29164)	LR 0.00010	
+[2023-08-14 17:39:14,184][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [212/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.11280 (30.11280)	LR 0.00010	
+[2023-08-14 17:39:14,290][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [213/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.03349 (29.03349)	LR 0.00010	
+[2023-08-14 17:39:14,545][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [214/1266000]	Time 0.25 (0.25)	Data 0.00 (0.00)	Loss 29.85262 (29.85262)	LR 0.00010	
+[2023-08-14 17:39:14,843][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [215/1266000]	Time 0.30 (0.30)	Data 0.00 (0.00)	Loss 30.01014 (30.01014)	LR 0.00010	
+[2023-08-14 17:39:14,947][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [216/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 30.26402 (30.26402)	LR 0.00010	
+[2023-08-14 17:39:15,071][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [217/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.05095 (30.05095)	LR 0.00010	
+[2023-08-14 17:39:15,664][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [218/1266000]	Time 0.59 (0.59)	Data 0.00 (0.00)	Loss 28.28292 (28.28292)	LR 0.00010	
+[2023-08-14 17:39:16,011][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [219/1266000]	Time 0.35 (0.35)	Data 0.00 (0.00)	Loss 29.90999 (29.90999)	LR 0.00010	
+[2023-08-14 17:39:16,127][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [220/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.11480 (30.11480)	LR 0.00010	
+[2023-08-14 17:39:16,232][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [221/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.99201 (29.99201)	LR 0.00010	
+[2023-08-14 17:39:16,539][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [222/1266000]	Time 0.31 (0.31)	Data 0.00 (0.00)	Loss 29.55144 (29.55144)	LR 0.00010	
+[2023-08-14 17:39:17,634][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [223/1266000]	Time 1.09 (1.09)	Data 0.00 (0.00)	Loss 29.41231 (29.41231)	LR 0.00010	
+[2023-08-14 17:39:17,748][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [224/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.83541 (30.83541)	LR 0.00010	
+[2023-08-14 17:39:17,856][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [225/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.00660 (29.00660)	LR 0.00010	
+[2023-08-14 17:39:17,967][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [226/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.14077 (29.14077)	LR 0.00010	
+[2023-08-14 17:39:18,164][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [227/1266000]	Time 0.20 (0.20)	Data 0.00 (0.00)	Loss 29.89335 (29.89335)	LR 0.00010	
+[2023-08-14 17:39:18,278][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [228/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.50856 (30.50856)	LR 0.00010	
+[2023-08-14 17:39:18,390][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [229/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.15840 (29.15840)	LR 0.00010	
+[2023-08-14 17:39:18,508][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [230/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.96542 (28.96542)	LR 0.00010	
+[2023-08-14 17:39:19,238][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [231/1266000]	Time 0.73 (0.73)	Data 0.56 (0.56)	Loss 29.52271 (29.52271)	LR 0.00010	
+[2023-08-14 17:39:19,356][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [232/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.21620 (30.21620)	LR 0.00010	
+[2023-08-14 17:39:19,467][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [233/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.27785 (29.27785)	LR 0.00010	
+[2023-08-14 17:39:19,597][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [234/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 29.93128 (29.93128)	LR 0.00010	
+[2023-08-14 17:39:20,157][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [235/1266000]	Time 0.56 (0.56)	Data 0.44 (0.44)	Loss 30.06919 (30.06919)	LR 0.00010	
+[2023-08-14 17:39:20,259][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [236/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.72941 (29.72941)	LR 0.00010	
+[2023-08-14 17:39:20,450][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [237/1266000]	Time 0.19 (0.19)	Data 0.00 (0.00)	Loss 29.87600 (29.87600)	LR 0.00010	
+[2023-08-14 17:39:20,552][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [238/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.46965 (29.46965)	LR 0.00010	
+[2023-08-14 17:39:21,074][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [239/1266000]	Time 0.52 (0.52)	Data 0.25 (0.25)	Loss 30.29610 (30.29610)	LR 0.00010	
+[2023-08-14 17:39:21,411][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [240/1266000]	Time 0.34 (0.34)	Data 0.23 (0.23)	Loss 29.83931 (29.83931)	LR 0.00010	
+[2023-08-14 17:39:21,632][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [241/1266000]	Time 0.22 (0.22)	Data 0.00 (0.00)	Loss 30.09734 (30.09734)	LR 0.00010	
+[2023-08-14 17:39:21,757][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [242/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.93538 (29.93538)	LR 0.00010	
+[2023-08-14 17:39:22,210][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [243/1266000]	Time 0.45 (0.45)	Data 0.00 (0.00)	Loss 29.49211 (29.49211)	LR 0.00010	
+[2023-08-14 17:39:22,319][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [244/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 32.06213 (32.06213)	LR 0.00010	
+[2023-08-14 17:39:22,710][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [245/1266000]	Time 0.39 (0.39)	Data 0.17 (0.17)	Loss 30.28433 (30.28433)	LR 0.00010	
+[2023-08-14 17:39:22,819][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [246/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.79165 (28.79165)	LR 0.00010	
+[2023-08-14 17:39:23,312][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [247/1266000]	Time 0.49 (0.49)	Data 0.00 (0.00)	Loss 30.22128 (30.22128)	LR 0.00010	
+[2023-08-14 17:39:23,411][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [248/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.90997 (29.90997)	LR 0.00010	
+[2023-08-14 17:39:23,722][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [249/1266000]	Time 0.31 (0.31)	Data 0.21 (0.21)	Loss 30.06179 (30.06179)	LR 0.00010	
+[2023-08-14 17:39:23,853][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [250/1266000]	Time 0.13 (0.13)	Data 0.03 (0.03)	Loss 31.16205 (31.16205)	LR 0.00010	
+[2023-08-14 17:39:24,368][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [251/1266000]	Time 0.51 (0.51)	Data 0.00 (0.00)	Loss 30.03480 (30.03480)	LR 0.00010	
+[2023-08-14 17:39:24,486][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [252/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 30.04445 (30.04445)	LR 0.00010	
+[2023-08-14 17:39:24,690][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [253/1266000]	Time 0.20 (0.20)	Data 0.00 (0.00)	Loss 30.53498 (30.53498)	LR 0.00010	
+[2023-08-14 17:39:25,165][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [254/1266000]	Time 0.46 (0.46)	Data 0.36 (0.36)	Loss 29.67017 (29.67017)	LR 0.00010	
+[2023-08-14 17:39:25,328][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [255/1266000]	Time 0.16 (0.16)	Data 0.00 (0.00)	Loss 29.96098 (29.96098)	LR 0.00010	
+[2023-08-14 17:39:25,432][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [256/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.36365 (29.36365)	LR 0.00010	
+[2023-08-14 17:39:26,055][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [257/1266000]	Time 0.62 (0.62)	Data 0.00 (0.00)	Loss 29.75223 (29.75223)	LR 0.00010	
+[2023-08-14 17:39:26,384][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [258/1266000]	Time 0.33 (0.33)	Data 0.23 (0.23)	Loss 29.75379 (29.75379)	LR 0.00010	
+[2023-08-14 17:39:26,485][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [259/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 30.01442 (30.01442)	LR 0.00010	
+[2023-08-14 17:39:26,577][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [260/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.69479 (28.69479)	LR 0.00010	
+[2023-08-14 17:39:27,286][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [261/1266000]	Time 0.71 (0.71)	Data 0.00 (0.00)	Loss 30.07026 (30.07026)	LR 0.00010	
+[2023-08-14 17:39:27,393][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [262/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.15049 (30.15049)	LR 0.00010	
+[2023-08-14 17:39:27,496][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [263/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.71866 (29.71866)	LR 0.00010	
+[2023-08-14 17:39:27,596][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [264/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 30.37213 (30.37213)	LR 0.00010	
+[2023-08-14 17:39:28,612][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [265/1266000]	Time 1.01 (1.01)	Data 0.00 (0.00)	Loss 29.86523 (29.86523)	LR 0.00010	
+[2023-08-14 17:39:28,715][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [266/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.72642 (29.72642)	LR 0.00010	
+[2023-08-14 17:39:28,812][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [267/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.87061 (28.87061)	LR 0.00010	
+[2023-08-14 17:39:28,920][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [268/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.07152 (30.07152)	LR 0.00010	
+[2023-08-14 17:39:29,757][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [269/1266000]	Time 0.84 (0.84)	Data 0.00 (0.00)	Loss 29.80000 (29.80000)	LR 0.00010	
+[2023-08-14 17:39:29,870][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [270/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.65177 (29.65177)	LR 0.00010	
+[2023-08-14 17:39:29,974][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [271/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.52543 (29.52543)	LR 0.00010	
+[2023-08-14 17:39:30,093][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [272/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.16146 (29.16146)	LR 0.00010	
+[2023-08-14 17:39:30,578][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [273/1266000]	Time 0.48 (0.48)	Data 0.00 (0.00)	Loss 30.23549 (30.23549)	LR 0.00010	
+[2023-08-14 17:39:30,703][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [274/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.91893 (28.91893)	LR 0.00010	
+[2023-08-14 17:39:30,942][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [275/1266000]	Time 0.24 (0.24)	Data 0.12 (0.12)	Loss 30.50083 (30.50083)	LR 0.00010	
+[2023-08-14 17:39:31,267][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [276/1266000]	Time 0.32 (0.32)	Data 0.22 (0.22)	Loss 29.43100 (29.43100)	LR 0.00010	
+[2023-08-14 17:39:31,781][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [277/1266000]	Time 0.51 (0.51)	Data 0.00 (0.00)	Loss 29.75016 (29.75016)	LR 0.00010	
+[2023-08-14 17:39:31,893][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [278/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.65653 (29.65653)	LR 0.00010	
+[2023-08-14 17:39:31,998][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [279/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.67761 (29.67761)	LR 0.00010	
+[2023-08-14 17:39:32,483][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [280/1266000]	Time 0.48 (0.48)	Data 0.37 (0.37)	Loss 28.65077 (28.65077)	LR 0.00010	
+[2023-08-14 17:39:32,658][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [281/1266000]	Time 0.17 (0.17)	Data 0.05 (0.05)	Loss 30.04257 (30.04257)	LR 0.00010	
+[2023-08-14 17:39:32,754][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [282/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.05000 (29.05000)	LR 0.00010	
+[2023-08-14 17:39:33,201][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [283/1266000]	Time 0.45 (0.45)	Data 0.35 (0.35)	Loss 28.91212 (28.91212)	LR 0.00010	
+[2023-08-14 17:39:33,879][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [284/1266000]	Time 0.68 (0.68)	Data 0.58 (0.58)	Loss 28.45874 (28.45874)	LR 0.00010	
+[2023-08-14 17:39:34,043][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [285/1266000]	Time 0.16 (0.16)	Data 0.00 (0.00)	Loss 29.02875 (29.02875)	LR 0.00010	
+[2023-08-14 17:39:34,145][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [286/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.91257 (28.91257)	LR 0.00010	
+[2023-08-14 17:39:34,627][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [287/1266000]	Time 0.48 (0.48)	Data 0.39 (0.39)	Loss 28.93361 (28.93361)	LR 0.00010	
+[2023-08-14 17:39:34,735][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [288/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.85189 (28.85189)	LR 0.00010	
+[2023-08-14 17:39:34,843][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [289/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.76145 (29.76145)	LR 0.00010	
+[2023-08-14 17:39:34,961][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [290/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.34723 (29.34723)	LR 0.00010	
+[2023-08-14 17:39:35,748][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [291/1266000]	Time 0.79 (0.79)	Data 0.68 (0.68)	Loss 30.26321 (30.26321)	LR 0.00010	
+[2023-08-14 17:39:35,855][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [292/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.33788 (30.33788)	LR 0.00010	
+[2023-08-14 17:39:35,969][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [293/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.44838 (28.44838)	LR 0.00010	
+[2023-08-14 17:39:36,080][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [294/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 30.11155 (30.11155)	LR 0.00010	
+[2023-08-14 17:39:36,564][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [295/1266000]	Time 0.48 (0.48)	Data 0.38 (0.38)	Loss 28.74359 (28.74359)	LR 0.00010	
+[2023-08-14 17:39:36,666][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [296/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.47597 (29.47597)	LR 0.00010	
+[2023-08-14 17:39:36,767][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [297/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.33650 (29.33650)	LR 0.00010	
+[2023-08-14 17:39:37,126][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [298/1266000]	Time 0.36 (0.36)	Data 0.27 (0.27)	Loss 29.71344 (29.71344)	LR 0.00010	
+[2023-08-14 17:39:37,894][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [299/1266000]	Time 0.77 (0.77)	Data 0.66 (0.66)	Loss 29.86566 (29.86566)	LR 0.00010	
+[2023-08-14 17:39:37,994][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [300/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.21755 (29.21755)	LR 0.00010	
+[2023-08-14 17:39:38,113][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [301/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.60942 (28.60942)	LR 0.00010	
+[2023-08-14 17:39:38,401][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [302/1266000]	Time 0.29 (0.29)	Data 0.17 (0.17)	Loss 28.87164 (28.87164)	LR 0.00010	
+[2023-08-14 17:39:39,014][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [303/1266000]	Time 0.61 (0.61)	Data 0.51 (0.51)	Loss 29.34935 (29.34935)	LR 0.00010	
+[2023-08-14 17:39:39,128][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [304/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.61935 (29.61935)	LR 0.00010	
+[2023-08-14 17:39:39,239][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [305/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.77838 (28.77838)	LR 0.00010	
+[2023-08-14 17:39:39,468][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [306/1266000]	Time 0.23 (0.23)	Data 0.12 (0.12)	Loss 29.41662 (29.41662)	LR 0.00010	
+[2023-08-14 17:39:39,963][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [307/1266000]	Time 0.49 (0.49)	Data 0.40 (0.40)	Loss 28.88931 (28.88931)	LR 0.00010	
+[2023-08-14 17:39:40,065][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [308/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.90292 (29.90292)	LR 0.00010	
+[2023-08-14 17:39:40,164][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [309/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.66749 (29.66749)	LR 0.00010	
+[2023-08-14 17:39:40,309][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [310/1266000]	Time 0.14 (0.14)	Data 0.03 (0.03)	Loss 29.04985 (29.04985)	LR 0.00010	
+[2023-08-14 17:39:40,740][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [311/1266000]	Time 0.43 (0.43)	Data 0.32 (0.32)	Loss 30.18215 (30.18215)	LR 0.00010	
+[2023-08-14 17:39:40,852][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [312/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.79801 (27.79801)	LR 0.00010	
+[2023-08-14 17:39:40,956][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [313/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 30.16107 (30.16107)	LR 0.00010	
+[2023-08-14 17:39:41,484][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [314/1266000]	Time 0.53 (0.53)	Data 0.43 (0.43)	Loss 29.32321 (29.32321)	LR 0.00010	
+[2023-08-14 17:39:41,591][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [315/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.21548 (29.21548)	LR 0.00010	
+[2023-08-14 17:39:42,119][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [316/1266000]	Time 0.53 (0.53)	Data 0.43 (0.43)	Loss 28.66484 (28.66484)	LR 0.00010	
+[2023-08-14 17:39:42,254][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [317/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 29.09007 (29.09007)	LR 0.00010	
+[2023-08-14 17:39:42,763][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [318/1266000]	Time 0.51 (0.51)	Data 0.39 (0.39)	Loss 28.98815 (28.98815)	LR 0.00010	
+[2023-08-14 17:39:42,877][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [319/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.99134 (28.99134)	LR 0.00010	
+[2023-08-14 17:39:43,630][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [320/1266000]	Time 0.75 (0.75)	Data 0.65 (0.65)	Loss 29.28726 (29.28726)	LR 0.00010	
+[2023-08-14 17:39:43,728][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [321/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.05627 (29.05627)	LR 0.00010	
+[2023-08-14 17:39:43,941][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [322/1266000]	Time 0.21 (0.21)	Data 0.11 (0.11)	Loss 29.35155 (29.35155)	LR 0.00010	
+[2023-08-14 17:39:44,100][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [323/1266000]	Time 0.16 (0.16)	Data 0.05 (0.05)	Loss 29.38138 (29.38138)	LR 0.00010	
+[2023-08-14 17:39:44,649][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [324/1266000]	Time 0.55 (0.55)	Data 0.44 (0.44)	Loss 28.92412 (28.92412)	LR 0.00010	
+[2023-08-14 17:39:44,783][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [325/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 29.34317 (29.34317)	LR 0.00010	
+[2023-08-14 17:39:45,034][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [326/1266000]	Time 0.25 (0.25)	Data 0.14 (0.14)	Loss 28.24963 (28.24963)	LR 0.00010	
+[2023-08-14 17:39:45,732][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [327/1266000]	Time 0.70 (0.70)	Data 0.59 (0.59)	Loss 29.67599 (29.67599)	LR 0.00010	
+[2023-08-14 17:39:45,842][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [328/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.57877 (28.57877)	LR 0.00010	
+[2023-08-14 17:39:45,944][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [329/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.76894 (28.76894)	LR 0.00010	
+[2023-08-14 17:39:46,599][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [330/1266000]	Time 0.65 (0.65)	Data 0.56 (0.56)	Loss 29.19640 (29.19640)	LR 0.00010	
+[2023-08-14 17:39:46,711][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [331/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.50852 (28.50852)	LR 0.00010	
+[2023-08-14 17:39:46,825][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [332/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.90144 (28.90144)	LR 0.00010	
+[2023-08-14 17:39:46,928][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [333/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.23539 (29.23539)	LR 0.00010	
+[2023-08-14 17:39:47,598][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [334/1266000]	Time 0.67 (0.67)	Data 0.57 (0.57)	Loss 29.18776 (29.18776)	LR 0.00010	
+[2023-08-14 17:39:47,843][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [335/1266000]	Time 0.24 (0.24)	Data 0.00 (0.00)	Loss 29.39919 (29.39919)	LR 0.00010	
+[2023-08-14 17:39:48,039][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [336/1266000]	Time 0.19 (0.19)	Data 0.09 (0.09)	Loss 28.77359 (28.77359)	LR 0.00010	
+[2023-08-14 17:39:48,145][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [337/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.64502 (28.64502)	LR 0.00010	
+[2023-08-14 17:39:48,260][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [338/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.20347 (29.20347)	LR 0.00010	
+[2023-08-14 17:39:49,301][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [339/1266000]	Time 1.04 (1.04)	Data 0.14 (0.14)	Loss 28.17181 (28.17181)	LR 0.00010	
+[2023-08-14 17:39:49,403][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [340/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.61677 (29.61677)	LR 0.00010	
+[2023-08-14 17:39:49,511][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [341/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.63186 (28.63186)	LR 0.00010	
+[2023-08-14 17:39:49,641][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [342/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 28.48812 (28.48812)	LR 0.00010	
+[2023-08-14 17:39:50,443][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [343/1266000]	Time 0.80 (0.80)	Data 0.18 (0.18)	Loss 30.04988 (30.04988)	LR 0.00010	
+[2023-08-14 17:39:50,567][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [344/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.43687 (29.43687)	LR 0.00010	
+[2023-08-14 17:39:50,691][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [345/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.39364 (29.39364)	LR 0.00010	
+[2023-08-14 17:39:50,795][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [346/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.14466 (29.14466)	LR 0.00010	
+[2023-08-14 17:39:51,064][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [347/1266000]	Time 0.27 (0.27)	Data 0.00 (0.00)	Loss 29.02717 (29.02717)	LR 0.00010	
+[2023-08-14 17:39:51,179][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [348/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.39564 (29.39564)	LR 0.00010	
+[2023-08-14 17:39:51,302][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [349/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.45620 (29.45620)	LR 0.00010	
+[2023-08-14 17:39:51,503][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [350/1266000]	Time 0.20 (0.20)	Data 0.10 (0.10)	Loss 28.93378 (28.93378)	LR 0.00010	
+[2023-08-14 17:39:52,205][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [351/1266000]	Time 0.70 (0.70)	Data 0.44 (0.44)	Loss 28.97288 (28.97288)	LR 0.00010	
+[2023-08-14 17:39:52,561][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [352/1266000]	Time 0.35 (0.35)	Data 0.24 (0.24)	Loss 29.93260 (29.93260)	LR 0.00010	
+[2023-08-14 17:39:52,668][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [353/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.46958 (28.46958)	LR 0.00010	
+[2023-08-14 17:39:52,778][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [354/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.82492 (28.82492)	LR 0.00010	
+[2023-08-14 17:39:53,118][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [355/1266000]	Time 0.34 (0.34)	Data 0.24 (0.24)	Loss 28.61383 (28.61383)	LR 0.00010	
+[2023-08-14 17:39:54,006][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [356/1266000]	Time 0.89 (0.89)	Data 0.79 (0.79)	Loss 28.90069 (28.90069)	LR 0.00010	
+[2023-08-14 17:39:54,106][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [357/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.93227 (27.93227)	LR 0.00010	
+[2023-08-14 17:39:54,210][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [358/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.89571 (29.89571)	LR 0.00010	
+[2023-08-14 17:39:54,372][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [359/1266000]	Time 0.16 (0.16)	Data 0.06 (0.06)	Loss 28.36359 (28.36359)	LR 0.00010	
+[2023-08-14 17:39:54,888][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [360/1266000]	Time 0.51 (0.51)	Data 0.41 (0.41)	Loss 29.15596 (29.15596)	LR 0.00010	
+[2023-08-14 17:39:54,989][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [361/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.31756 (28.31756)	LR 0.00010	
+[2023-08-14 17:39:55,098][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [362/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.98229 (28.98229)	LR 0.00010	
+[2023-08-14 17:39:55,638][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [363/1266000]	Time 0.54 (0.54)	Data 0.44 (0.44)	Loss 29.25952 (29.25952)	LR 0.00010	
+[2023-08-14 17:39:56,303][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [364/1266000]	Time 0.66 (0.66)	Data 0.56 (0.56)	Loss 29.58039 (29.58039)	LR 0.00010	
+[2023-08-14 17:39:56,404][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [365/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.60210 (28.60210)	LR 0.00010	
+[2023-08-14 17:39:56,513][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [366/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.41614 (29.41614)	LR 0.00010	
+[2023-08-14 17:39:56,744][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [367/1266000]	Time 0.23 (0.23)	Data 0.12 (0.12)	Loss 29.16376 (29.16376)	LR 0.00010	
+[2023-08-14 17:39:57,289][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [368/1266000]	Time 0.54 (0.54)	Data 0.45 (0.45)	Loss 28.53497 (28.53497)	LR 0.00010	
+[2023-08-14 17:39:57,431][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [369/1266000]	Time 0.14 (0.14)	Data 0.00 (0.00)	Loss 28.47602 (28.47602)	LR 0.00010	
+[2023-08-14 17:39:57,544][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [370/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.36570 (28.36570)	LR 0.00010	
+[2023-08-14 17:39:57,664][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [371/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.25235 (29.25235)	LR 0.00010	
+[2023-08-14 17:39:58,881][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [372/1266000]	Time 1.22 (1.22)	Data 1.11 (1.11)	Loss 28.72875 (28.72875)	LR 0.00010	
+[2023-08-14 17:39:58,992][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [373/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.13693 (29.13693)	LR 0.00010	
+[2023-08-14 17:39:59,106][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [374/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.43453 (29.43453)	LR 0.00010	
+[2023-08-14 17:39:59,233][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [375/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 28.92056 (28.92056)	LR 0.00010	
+[2023-08-14 17:39:59,436][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [376/1266000]	Time 0.20 (0.20)	Data 0.10 (0.10)	Loss 28.57909 (28.57909)	LR 0.00010	
+[2023-08-14 17:39:59,552][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [377/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.80105 (28.80105)	LR 0.00010	
+[2023-08-14 17:39:59,653][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [378/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.87099 (27.87099)	LR 0.00010	
+[2023-08-14 17:39:59,758][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [379/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.00052 (29.00052)	LR 0.00010	
+[2023-08-14 17:40:00,368][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [380/1266000]	Time 0.61 (0.61)	Data 0.49 (0.49)	Loss 28.42485 (28.42485)	LR 0.00010	
+[2023-08-14 17:40:00,480][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [381/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.93062 (28.93062)	LR 0.00010	
+[2023-08-14 17:40:00,969][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [382/1266000]	Time 0.49 (0.49)	Data 0.00 (0.00)	Loss 29.25041 (29.25041)	LR 0.00010	
+[2023-08-14 17:40:01,082][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [383/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.95063 (28.95063)	LR 0.00010	
+[2023-08-14 17:40:01,198][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [384/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.41433 (28.41433)	LR 0.00010	
+[2023-08-14 17:40:01,348][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [385/1266000]	Time 0.15 (0.15)	Data 0.00 (0.00)	Loss 29.44130 (29.44130)	LR 0.00010	
+[2023-08-14 17:40:02,279][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [386/1266000]	Time 0.93 (0.93)	Data 0.00 (0.00)	Loss 28.58268 (28.58268)	LR 0.00010	
+[2023-08-14 17:40:02,395][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [387/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.80160 (29.80160)	LR 0.00010	
+[2023-08-14 17:40:02,506][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [388/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.33494 (28.33494)	LR 0.00010	
+[2023-08-14 17:40:02,616][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [389/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.21280 (29.21280)	LR 0.00010	
+[2023-08-14 17:40:02,720][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [390/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.41562 (27.41562)	LR 0.00010	
+[2023-08-14 17:40:03,055][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [391/1266000]	Time 0.33 (0.33)	Data 0.00 (0.00)	Loss 28.55225 (28.55225)	LR 0.00010	
+[2023-08-14 17:40:03,174][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [392/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.48312 (29.48312)	LR 0.00010	
+[2023-08-14 17:40:03,594][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [393/1266000]	Time 0.42 (0.42)	Data 0.00 (0.00)	Loss 29.04914 (29.04914)	LR 0.00010	
+[2023-08-14 17:40:04,113][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [394/1266000]	Time 0.52 (0.52)	Data 0.42 (0.42)	Loss 27.72541 (27.72541)	LR 0.00010	
+[2023-08-14 17:40:04,619][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [395/1266000]	Time 0.51 (0.51)	Data 0.00 (0.00)	Loss 28.28679 (28.28679)	LR 0.00010	
+[2023-08-14 17:40:04,725][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [396/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.14886 (28.14886)	LR 0.00010	
+[2023-08-14 17:40:05,100][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [397/1266000]	Time 0.37 (0.37)	Data 0.00 (0.00)	Loss 27.66888 (27.66888)	LR 0.00010	
+[2023-08-14 17:40:06,038][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [398/1266000]	Time 0.94 (0.94)	Data 0.82 (0.82)	Loss 28.74186 (28.74186)	LR 0.00010	
+[2023-08-14 17:40:06,145][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [399/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.61942 (28.61942)	LR 0.00010	
+[2023-08-14 17:40:06,272][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [400/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 28.48333 (28.48333)	LR 0.00010	
+[2023-08-14 17:40:06,380][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [401/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.58649 (27.58649)	LR 0.00010	
+[2023-08-14 17:40:06,730][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [402/1266000]	Time 0.35 (0.35)	Data 0.23 (0.23)	Loss 29.26588 (29.26588)	LR 0.00010	
+[2023-08-14 17:40:07,194][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [403/1266000]	Time 0.46 (0.46)	Data 0.00 (0.00)	Loss 28.30700 (28.30700)	LR 0.00010	
+[2023-08-14 17:40:07,365][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [404/1266000]	Time 0.17 (0.17)	Data 0.00 (0.00)	Loss 27.67152 (27.67152)	LR 0.00010	
+[2023-08-14 17:40:07,477][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [405/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.07006 (29.07006)	LR 0.00010	
+[2023-08-14 17:40:07,585][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [406/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.23922 (28.23922)	LR 0.00010	
+[2023-08-14 17:40:07,955][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [407/1266000]	Time 0.37 (0.37)	Data 0.00 (0.00)	Loss 28.60223 (28.60223)	LR 0.00010	
+[2023-08-14 17:40:08,304][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [408/1266000]	Time 0.35 (0.35)	Data 0.00 (0.00)	Loss 29.13255 (29.13255)	LR 0.00010	
+[2023-08-14 17:40:08,409][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [409/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.63420 (29.63420)	LR 0.00010	
+[2023-08-14 17:40:08,526][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [410/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.54832 (28.54832)	LR 0.00010	
+[2023-08-14 17:40:08,743][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [411/1266000]	Time 0.22 (0.22)	Data 0.00 (0.00)	Loss 28.73916 (28.73916)	LR 0.00010	
+[2023-08-14 17:40:09,053][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [412/1266000]	Time 0.31 (0.31)	Data 0.00 (0.00)	Loss 28.56772 (28.56772)	LR 0.00010	
+[2023-08-14 17:40:09,169][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [413/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.20762 (29.20762)	LR 0.00010	
+[2023-08-14 17:40:09,395][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [414/1266000]	Time 0.22 (0.22)	Data 0.11 (0.11)	Loss 29.59494 (29.59494)	LR 0.00010	
+[2023-08-14 17:40:09,760][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [415/1266000]	Time 0.36 (0.36)	Data 0.05 (0.05)	Loss 29.08899 (29.08899)	LR 0.00010	
+[2023-08-14 17:40:10,510][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [416/1266000]	Time 0.75 (0.75)	Data 0.00 (0.00)	Loss 28.35453 (28.35453)	LR 0.00010	
+[2023-08-14 17:40:10,628][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [417/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.66733 (28.66733)	LR 0.00010	
+[2023-08-14 17:40:10,757][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [418/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 28.98655 (28.98655)	LR 0.00010	
+[2023-08-14 17:40:10,869][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [419/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.24117 (28.24117)	LR 0.00010	
+[2023-08-14 17:40:11,390][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [420/1266000]	Time 0.52 (0.52)	Data 0.00 (0.00)	Loss 27.95110 (27.95110)	LR 0.00010	
+[2023-08-14 17:40:11,832][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [421/1266000]	Time 0.44 (0.44)	Data 0.27 (0.27)	Loss 28.93409 (28.93409)	LR 0.00010	
+[2023-08-14 17:40:11,937][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [422/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.28453 (29.28453)	LR 0.00010	
+[2023-08-14 17:40:12,143][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [423/1266000]	Time 0.20 (0.20)	Data 0.00 (0.00)	Loss 28.96943 (28.96943)	LR 0.00010	
+[2023-08-14 17:40:12,644][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [424/1266000]	Time 0.50 (0.50)	Data 0.00 (0.00)	Loss 27.29390 (27.29390)	LR 0.00010	
+[2023-08-14 17:40:12,972][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [425/1266000]	Time 0.33 (0.33)	Data 0.00 (0.00)	Loss 28.78717 (28.78717)	LR 0.00010	
+[2023-08-14 17:40:13,081][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [426/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.65495 (28.65495)	LR 0.00010	
+[2023-08-14 17:40:13,372][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [427/1266000]	Time 0.29 (0.29)	Data 0.00 (0.00)	Loss 28.25527 (28.25527)	LR 0.00010	
+[2023-08-14 17:40:14,103][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [428/1266000]	Time 0.73 (0.73)	Data 0.00 (0.00)	Loss 28.13214 (28.13214)	LR 0.00010	
+[2023-08-14 17:40:14,278][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [429/1266000]	Time 0.17 (0.17)	Data 0.07 (0.07)	Loss 29.16758 (29.16758)	LR 0.00010	
+[2023-08-14 17:40:14,393][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [430/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.01442 (28.01442)	LR 0.00010	
+[2023-08-14 17:40:14,665][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [431/1266000]	Time 0.27 (0.27)	Data 0.00 (0.00)	Loss 28.45474 (28.45474)	LR 0.00010	
+[2023-08-14 17:40:15,408][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [432/1266000]	Time 0.74 (0.74)	Data 0.00 (0.00)	Loss 27.77172 (27.77172)	LR 0.00010	
+[2023-08-14 17:40:15,684][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [433/1266000]	Time 0.28 (0.28)	Data 0.00 (0.00)	Loss 28.76085 (28.76085)	LR 0.00010	
+[2023-08-14 17:40:15,795][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [434/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.40524 (28.40524)	LR 0.00010	
+[2023-08-14 17:40:15,900][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [435/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.47916 (28.47916)	LR 0.00010	
+[2023-08-14 17:40:16,382][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [436/1266000]	Time 0.48 (0.48)	Data 0.00 (0.00)	Loss 28.96042 (28.96042)	LR 0.00010	
+[2023-08-14 17:40:16,488][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [437/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.04875 (29.04875)	LR 0.00010	
+[2023-08-14 17:40:16,601][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [438/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.60099 (29.60099)	LR 0.00010	
+[2023-08-14 17:40:17,057][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [439/1266000]	Time 0.46 (0.46)	Data 0.00 (0.00)	Loss 28.33954 (28.33954)	LR 0.00010	
+[2023-08-14 17:40:17,406][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [440/1266000]	Time 0.35 (0.35)	Data 0.00 (0.00)	Loss 29.07458 (29.07458)	LR 0.00010	
+[2023-08-14 17:40:17,518][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [441/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.30947 (27.30947)	LR 0.00010	
+[2023-08-14 17:40:17,651][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [442/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 27.85331 (27.85331)	LR 0.00010	
+[2023-08-14 17:40:17,952][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [443/1266000]	Time 0.30 (0.30)	Data 0.00 (0.00)	Loss 28.45154 (28.45154)	LR 0.00010	
+[2023-08-14 17:40:18,114][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [444/1266000]	Time 0.16 (0.16)	Data 0.00 (0.00)	Loss 27.95565 (27.95565)	LR 0.00010	
+[2023-08-14 17:40:18,567][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [445/1266000]	Time 0.45 (0.45)	Data 0.34 (0.34)	Loss 29.15262 (29.15262)	LR 0.00010	
+[2023-08-14 17:40:18,662][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [446/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.25299 (28.25299)	LR 0.00010	
+[2023-08-14 17:40:18,970][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [447/1266000]	Time 0.31 (0.31)	Data 0.00 (0.00)	Loss 28.45512 (28.45512)	LR 0.00010	
+[2023-08-14 17:40:19,861][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [448/1266000]	Time 0.89 (0.89)	Data 0.00 (0.00)	Loss 30.33868 (30.33868)	LR 0.00010	
+[2023-08-14 17:40:19,966][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [449/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.93620 (28.93620)	LR 0.00010	
+[2023-08-14 17:40:20,083][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [450/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.34055 (28.34055)	LR 0.00010	
+[2023-08-14 17:40:20,184][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [451/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.45255 (29.45255)	LR 0.00010	
+[2023-08-14 17:40:20,374][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [452/1266000]	Time 0.19 (0.19)	Data 0.00 (0.00)	Loss 27.87054 (27.87054)	LR 0.00010	
+[2023-08-14 17:40:20,485][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [453/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.67476 (28.67476)	LR 0.00010	
+[2023-08-14 17:40:20,582][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [454/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.51063 (29.51063)	LR 0.00010	
+[2023-08-14 17:40:20,697][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [455/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.31900 (28.31900)	LR 0.00010	
+[2023-08-14 17:40:22,013][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [456/1266000]	Time 1.32 (1.32)	Data 0.00 (0.00)	Loss 28.29845 (28.29845)	LR 0.00010	
+[2023-08-14 17:40:22,120][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [457/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.99461 (27.99461)	LR 0.00010	
+[2023-08-14 17:40:22,242][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [458/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.92105 (27.92105)	LR 0.00010	
+[2023-08-14 17:40:22,359][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [459/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.62365 (29.62365)	LR 0.00010	
+[2023-08-14 17:40:22,931][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [460/1266000]	Time 0.57 (0.57)	Data 0.00 (0.00)	Loss 28.29395 (28.29395)	LR 0.00010	
+[2023-08-14 17:40:23,030][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [461/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.41848 (28.41848)	LR 0.00010	
+[2023-08-14 17:40:23,142][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [462/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.05274 (28.05274)	LR 0.00010	
+[2023-08-14 17:40:23,252][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [463/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.97145 (28.97145)	LR 0.00010	
+[2023-08-14 17:40:24,022][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [464/1266000]	Time 0.77 (0.77)	Data 0.00 (0.00)	Loss 27.97661 (27.97661)	LR 0.00010	
+[2023-08-14 17:40:24,123][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [465/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.83877 (29.83877)	LR 0.00010	
+[2023-08-14 17:40:24,227][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [466/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.88008 (27.88008)	LR 0.00010	
+[2023-08-14 17:40:24,336][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [467/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.29847 (28.29847)	LR 0.00010	
+[2023-08-14 17:40:24,919][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [468/1266000]	Time 0.58 (0.58)	Data 0.00 (0.00)	Loss 27.59941 (27.59941)	LR 0.00010	
+[2023-08-14 17:40:25,182][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [469/1266000]	Time 0.26 (0.26)	Data 0.00 (0.00)	Loss 28.15816 (28.15816)	LR 0.00010	
+[2023-08-14 17:40:25,283][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [470/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.28377 (27.28377)	LR 0.00010	
+[2023-08-14 17:40:25,384][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [471/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.32382 (28.32382)	LR 0.00010	
+[2023-08-14 17:40:25,762][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [472/1266000]	Time 0.38 (0.38)	Data 0.00 (0.00)	Loss 28.36940 (28.36940)	LR 0.00010	
+[2023-08-14 17:40:26,305][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [473/1266000]	Time 0.54 (0.54)	Data 0.01 (0.01)	Loss 28.33797 (28.33797)	LR 0.00010	
+[2023-08-14 17:40:26,433][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [474/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 28.61135 (28.61135)	LR 0.00010	
+[2023-08-14 17:40:26,528][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [475/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.69157 (28.69157)	LR 0.00010	
+[2023-08-14 17:40:26,636][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [476/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.69832 (27.69832)	LR 0.00010	
+[2023-08-14 17:40:27,510][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [477/1266000]	Time 0.87 (0.87)	Data 0.00 (0.00)	Loss 28.00000 (28.00000)	LR 0.00010	
+[2023-08-14 17:40:27,620][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [478/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.41683 (28.41683)	LR 0.00010	
+[2023-08-14 17:40:27,732][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [479/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.64934 (28.64934)	LR 0.00010	
+[2023-08-14 17:40:27,843][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [480/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.78766 (28.78766)	LR 0.00010	
+[2023-08-14 17:40:28,155][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [481/1266000]	Time 0.31 (0.31)	Data 0.00 (0.00)	Loss 28.82819 (28.82819)	LR 0.00010	
+[2023-08-14 17:40:28,258][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [482/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.77106 (28.77106)	LR 0.00010	
+[2023-08-14 17:40:28,351][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [483/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.24283 (28.24283)	LR 0.00010	
+[2023-08-14 17:40:28,465][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [484/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.60883 (28.60883)	LR 0.00010	
+[2023-08-14 17:40:29,016][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [485/1266000]	Time 0.55 (0.55)	Data 0.00 (0.00)	Loss 27.36674 (27.36674)	LR 0.00010	
+[2023-08-14 17:40:29,505][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [486/1266000]	Time 0.49 (0.49)	Data 0.00 (0.00)	Loss 28.05937 (28.05937)	LR 0.00010	
+[2023-08-14 17:40:29,611][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [487/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.81989 (27.81989)	LR 0.00010	
+[2023-08-14 17:40:29,926][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [488/1266000]	Time 0.31 (0.31)	Data 0.00 (0.00)	Loss 27.82885 (27.82885)	LR 0.00010	
+[2023-08-14 17:40:30,357][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [489/1266000]	Time 0.43 (0.43)	Data 0.00 (0.00)	Loss 28.51678 (28.51678)	LR 0.00010	
+[2023-08-14 17:40:31,020][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [490/1266000]	Time 0.66 (0.66)	Data 0.00 (0.00)	Loss 29.28189 (29.28189)	LR 0.00010	
+[2023-08-14 17:40:31,139][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [491/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.80636 (27.80636)	LR 0.00010	
+[2023-08-14 17:40:31,255][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [492/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.24693 (28.24693)	LR 0.00010	
+[2023-08-14 17:40:31,353][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [493/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.32259 (28.32259)	LR 0.00010	
+[2023-08-14 17:40:31,663][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [494/1266000]	Time 0.31 (0.31)	Data 0.00 (0.00)	Loss 28.09707 (28.09707)	LR 0.00010	
+[2023-08-14 17:40:31,763][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [495/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.08893 (27.08893)	LR 0.00010	
+[2023-08-14 17:40:32,162][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [496/1266000]	Time 0.40 (0.40)	Data 0.00 (0.00)	Loss 27.89899 (27.89899)	LR 0.00010	
+[2023-08-14 17:40:32,277][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [497/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.22358 (29.22358)	LR 0.00010	
+[2023-08-14 17:40:32,502][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [498/1266000]	Time 0.22 (0.22)	Data 0.11 (0.11)	Loss 29.10749 (29.10749)	LR 0.00010	
+[2023-08-14 17:40:32,629][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [499/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 28.07973 (28.07973)	LR 0.00010	
+[2023-08-14 17:40:32,986][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [500/1266000]	Time 0.36 (0.36)	Data 0.00 (0.00)	Loss 28.89843 (28.89843)	LR 0.00010	
+[2023-08-14 17:40:33,092][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [501/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.68335 (28.68335)	LR 0.00010	
+[2023-08-14 17:40:33,726][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [502/1266000]	Time 0.63 (0.63)	Data 0.18 (0.18)	Loss 28.94397 (28.94397)	LR 0.00010	
+[2023-08-14 17:40:33,825][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [503/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.65985 (28.65985)	LR 0.00010	
+[2023-08-14 17:40:33,928][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [504/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.51719 (28.51719)	LR 0.00010	
+[2023-08-14 17:40:34,325][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [505/1266000]	Time 0.40 (0.40)	Data 0.00 (0.00)	Loss 28.75970 (28.75970)	LR 0.00010	
+[2023-08-14 17:40:34,769][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [506/1266000]	Time 0.44 (0.44)	Data 0.13 (0.13)	Loss 27.79742 (27.79742)	LR 0.00010	
+[2023-08-14 17:40:34,875][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [507/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.54508 (28.54508)	LR 0.00010	
+[2023-08-14 17:40:34,973][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [508/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.06168 (28.06168)	LR 0.00010	
+[2023-08-14 17:40:35,438][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [509/1266000]	Time 0.46 (0.46)	Data 0.00 (0.00)	Loss 29.82940 (29.82940)	LR 0.00010	
+[2023-08-14 17:40:36,384][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [510/1266000]	Time 0.94 (0.94)	Data 0.84 (0.84)	Loss 28.92762 (28.92762)	LR 0.00010	
+[2023-08-14 17:40:36,492][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [511/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.42237 (28.42237)	LR 0.00010	
+[2023-08-14 17:40:36,601][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [512/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.62566 (27.62566)	LR 0.00010	
+[2023-08-14 17:40:36,819][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [513/1266000]	Time 0.22 (0.22)	Data 0.00 (0.00)	Loss 29.17058 (29.17058)	LR 0.00010	
+[2023-08-14 17:40:37,311][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [514/1266000]	Time 0.49 (0.49)	Data 0.39 (0.39)	Loss 28.97751 (28.97751)	LR 0.00010	
+[2023-08-14 17:40:37,406][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [515/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.63102 (28.63102)	LR 0.00010	
+[2023-08-14 17:40:37,506][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [516/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.19392 (28.19392)	LR 0.00010	
+[2023-08-14 17:40:38,015][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [517/1266000]	Time 0.51 (0.51)	Data 0.00 (0.00)	Loss 27.99912 (27.99912)	LR 0.00010	
+[2023-08-14 17:40:38,631][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [518/1266000]	Time 0.62 (0.62)	Data 0.53 (0.53)	Loss 27.78198 (27.78198)	LR 0.00010	
+[2023-08-14 17:40:38,736][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [519/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.05507 (29.05507)	LR 0.00010	
+[2023-08-14 17:40:38,851][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [520/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.97614 (28.97614)	LR 0.00010	
+[2023-08-14 17:40:38,996][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [521/1266000]	Time 0.14 (0.14)	Data 0.00 (0.00)	Loss 27.59823 (27.59823)	LR 0.00010	
+[2023-08-14 17:40:39,768][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [522/1266000]	Time 0.77 (0.77)	Data 0.13 (0.13)	Loss 27.66725 (27.66725)	LR 0.00010	
+[2023-08-14 17:40:39,873][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [523/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.35163 (28.35163)	LR 0.00010	
+[2023-08-14 17:40:39,981][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [524/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.41948 (28.41948)	LR 0.00010	
+[2023-08-14 17:40:40,092][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [525/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.30142 (29.30142)	LR 0.00010	
+[2023-08-14 17:40:40,898][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [526/1266000]	Time 0.81 (0.81)	Data 0.00 (0.00)	Loss 28.22773 (28.22773)	LR 0.00010	
+[2023-08-14 17:40:40,998][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [527/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.51646 (29.51646)	LR 0.00010	
+[2023-08-14 17:40:41,117][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [528/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.39154 (28.39154)	LR 0.00010	
+[2023-08-14 17:40:41,234][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [529/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.09138 (28.09138)	LR 0.00010	
+[2023-08-14 17:40:41,533][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [530/1266000]	Time 0.30 (0.30)	Data 0.00 (0.00)	Loss 28.35658 (28.35658)	LR 0.00010	
+[2023-08-14 17:40:41,630][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [531/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.84593 (27.84593)	LR 0.00010	
+[2023-08-14 17:40:42,061][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [532/1266000]	Time 0.43 (0.43)	Data 0.00 (0.00)	Loss 28.32505 (28.32505)	LR 0.00010	
+[2023-08-14 17:40:42,161][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [533/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.63800 (28.63800)	LR 0.00010	
+[2023-08-14 17:40:42,570][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [534/1266000]	Time 0.41 (0.41)	Data 0.00 (0.00)	Loss 27.96143 (27.96143)	LR 0.00010	
+[2023-08-14 17:40:42,799][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [535/1266000]	Time 0.23 (0.23)	Data 0.00 (0.00)	Loss 28.84780 (28.84780)	LR 0.00010	
+[2023-08-14 17:40:43,264][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [536/1266000]	Time 0.46 (0.46)	Data 0.00 (0.00)	Loss 28.48933 (28.48933)	LR 0.00010	
+[2023-08-14 17:40:43,386][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [537/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.89091 (27.89091)	LR 0.00010	
+[2023-08-14 17:40:43,574][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [538/1266000]	Time 0.19 (0.19)	Data 0.00 (0.00)	Loss 27.24995 (27.24995)	LR 0.00010	
+[2023-08-14 17:40:43,694][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [539/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.66681 (28.66681)	LR 0.00010	
+[2023-08-14 17:40:43,916][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [540/1266000]	Time 0.22 (0.22)	Data 0.00 (0.00)	Loss 27.48068 (27.48068)	LR 0.00010	
+[2023-08-14 17:40:44,447][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [541/1266000]	Time 0.53 (0.53)	Data 0.00 (0.00)	Loss 28.25020 (28.25020)	LR 0.00010	
+[2023-08-14 17:40:44,560][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [542/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.56331 (28.56331)	LR 0.00010	
+[2023-08-14 17:40:44,663][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [543/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.09290 (29.09290)	LR 0.00010	
+[2023-08-14 17:40:44,834][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [544/1266000]	Time 0.17 (0.17)	Data 0.00 (0.00)	Loss 28.46282 (28.46282)	LR 0.00010	
+[2023-08-14 17:40:45,667][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [545/1266000]	Time 0.83 (0.83)	Data 0.00 (0.00)	Loss 28.68954 (28.68954)	LR 0.00010	
+[2023-08-14 17:40:45,784][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [546/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.70218 (27.70218)	LR 0.00010	
+[2023-08-14 17:40:45,894][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [547/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.81940 (28.81940)	LR 0.00010	
+[2023-08-14 17:40:45,987][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [548/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.30620 (28.30620)	LR 0.00010	
+[2023-08-14 17:40:46,915][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [549/1266000]	Time 0.93 (0.93)	Data 0.00 (0.00)	Loss 29.42383 (29.42383)	LR 0.00010	
+[2023-08-14 17:40:47,012][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [550/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.13050 (27.13050)	LR 0.00010	
+[2023-08-14 17:40:47,121][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [551/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.33171 (28.33171)	LR 0.00010	
+[2023-08-14 17:40:47,245][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [552/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.26089 (28.26089)	LR 0.00010	
+[2023-08-14 17:40:48,633][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [553/1266000]	Time 1.39 (1.39)	Data 0.00 (0.00)	Loss 26.87466 (26.87466)	LR 0.00010	
+[2023-08-14 17:40:48,744][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [554/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.24268 (29.24268)	LR 0.00010	
+[2023-08-14 17:40:48,853][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [555/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.31876 (28.31876)	LR 0.00010	
+[2023-08-14 17:40:48,972][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [556/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.23825 (28.23825)	LR 0.00010	
+[2023-08-14 17:40:49,157][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [557/1266000]	Time 0.18 (0.18)	Data 0.00 (0.00)	Loss 28.87293 (28.87293)	LR 0.00010	
+[2023-08-14 17:40:49,249][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [558/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.27009 (28.27009)	LR 0.00010	
+[2023-08-14 17:40:49,359][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [559/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.87806 (27.87806)	LR 0.00010	
+[2023-08-14 17:40:49,479][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [560/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 29.14570 (29.14570)	LR 0.00010	
+[2023-08-14 17:40:50,108][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [561/1266000]	Time 0.63 (0.63)	Data 0.00 (0.00)	Loss 28.99461 (28.99461)	LR 0.00010	
+[2023-08-14 17:40:50,405][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [562/1266000]	Time 0.30 (0.30)	Data 0.00 (0.00)	Loss 28.85716 (28.85716)	LR 0.00010	
+[2023-08-14 17:40:50,503][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [563/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.30525 (28.30525)	LR 0.00010	
+[2023-08-14 17:40:50,600][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [564/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.38605 (27.38605)	LR 0.00010	
+[2023-08-14 17:40:51,056][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [565/1266000]	Time 0.46 (0.46)	Data 0.00 (0.00)	Loss 28.80034 (28.80034)	LR 0.00010	
+[2023-08-14 17:40:51,188][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [566/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 27.64092 (27.64092)	LR 0.00010	
+[2023-08-14 17:40:51,639][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [567/1266000]	Time 0.45 (0.45)	Data 0.00 (0.00)	Loss 28.63519 (28.63519)	LR 0.00010	
+[2023-08-14 17:40:51,754][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [568/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.18126 (28.18126)	LR 0.00010	
+[2023-08-14 17:40:52,083][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [569/1266000]	Time 0.33 (0.33)	Data 0.00 (0.00)	Loss 27.19671 (27.19671)	LR 0.00010	
+[2023-08-14 17:40:52,365][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [570/1266000]	Time 0.28 (0.28)	Data 0.11 (0.11)	Loss 28.29924 (28.29924)	LR 0.00010	
+[2023-08-14 17:40:52,699][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [571/1266000]	Time 0.33 (0.33)	Data 0.00 (0.00)	Loss 28.81536 (28.81536)	LR 0.00010	
+[2023-08-14 17:40:52,798][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [572/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.70283 (28.70283)	LR 0.00010	
+[2023-08-14 17:40:52,924][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [573/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.48203 (28.48203)	LR 0.00010	
+[2023-08-14 17:40:53,428][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [574/1266000]	Time 0.50 (0.50)	Data 0.27 (0.27)	Loss 27.47358 (27.47358)	LR 0.00010	
+[2023-08-14 17:40:54,037][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [575/1266000]	Time 0.61 (0.61)	Data 0.00 (0.00)	Loss 29.43408 (29.43408)	LR 0.00010	
+[2023-08-14 17:40:54,146][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [576/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.67161 (28.67161)	LR 0.00010	
+[2023-08-14 17:40:54,265][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [577/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.35561 (28.35561)	LR 0.00010	
+[2023-08-14 17:40:54,666][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [578/1266000]	Time 0.40 (0.40)	Data 0.29 (0.29)	Loss 29.53300 (29.53300)	LR 0.00010	
+[2023-08-14 17:40:55,153][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [579/1266000]	Time 0.49 (0.49)	Data 0.00 (0.00)	Loss 28.41791 (28.41791)	LR 0.00010	
+[2023-08-14 17:40:55,252][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [580/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.26355 (28.26355)	LR 0.00010	
+[2023-08-14 17:40:55,352][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [581/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.94826 (27.94826)	LR 0.00010	
+[2023-08-14 17:40:55,766][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [582/1266000]	Time 0.41 (0.41)	Data 0.08 (0.08)	Loss 28.71283 (28.71283)	LR 0.00010	
+[2023-08-14 17:40:56,175][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [583/1266000]	Time 0.41 (0.41)	Data 0.00 (0.00)	Loss 27.32302 (27.32302)	LR 0.00010	
+[2023-08-14 17:40:56,281][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [584/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.03016 (29.03016)	LR 0.00010	
+[2023-08-14 17:40:56,379][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [585/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.03118 (28.03118)	LR 0.00010	
+[2023-08-14 17:40:56,838][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [586/1266000]	Time 0.46 (0.46)	Data 0.25 (0.25)	Loss 28.37720 (28.37720)	LR 0.00010	
+[2023-08-14 17:40:57,349][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [587/1266000]	Time 0.51 (0.51)	Data 0.06 (0.06)	Loss 27.80658 (27.80658)	LR 0.00010	
+[2023-08-14 17:40:57,453][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [588/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.44018 (28.44018)	LR 0.00010	
+[2023-08-14 17:40:57,560][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [589/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.38159 (28.38159)	LR 0.00010	
+[2023-08-14 17:40:58,299][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [590/1266000]	Time 0.74 (0.74)	Data 0.00 (0.00)	Loss 29.00397 (29.00397)	LR 0.00010	
+[2023-08-14 17:40:58,404][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [591/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.68229 (28.68229)	LR 0.00010	
+[2023-08-14 17:40:58,503][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [592/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.04799 (28.04799)	LR 0.00010	
+[2023-08-14 17:40:58,614][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [593/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.38008 (27.38008)	LR 0.00010	
+[2023-08-14 17:40:59,745][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [594/1266000]	Time 1.13 (1.13)	Data 0.00 (0.00)	Loss 27.65696 (27.65696)	LR 0.00010	
+[2023-08-14 17:40:59,845][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [595/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.52155 (28.52155)	LR 0.00010	
+[2023-08-14 17:40:59,947][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [596/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.82788 (27.82788)	LR 0.00010	
+[2023-08-14 17:41:00,049][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [597/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.31171 (29.31171)	LR 0.00010	
+[2023-08-14 17:41:00,148][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [598/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.22763 (28.22763)	LR 0.00010	
+[2023-08-14 17:41:00,254][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [599/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.73778 (27.73778)	LR 0.00010	
+[2023-08-14 17:41:00,375][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [600/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.96687 (27.96687)	LR 0.00010	
+[2023-08-14 17:41:00,489][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [601/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.76976 (27.76976)	LR 0.00010	
+[2023-08-14 17:41:01,066][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [602/1266000]	Time 0.57 (0.57)	Data 0.00 (0.00)	Loss 28.81781 (28.81781)	LR 0.00010	
+[2023-08-14 17:41:01,158][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [603/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.02637 (28.02637)	LR 0.00010	
+[2023-08-14 17:41:01,714][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [604/1266000]	Time 0.56 (0.56)	Data 0.44 (0.44)	Loss 28.12242 (28.12242)	LR 0.00010	
+[2023-08-14 17:41:01,814][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [605/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.73003 (27.73003)	LR 0.00010	
+[2023-08-14 17:41:01,942][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [606/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 27.40584 (27.40584)	LR 0.00010	
+[2023-08-14 17:41:02,069][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [607/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 28.28267 (28.28267)	LR 0.00010	
+[2023-08-14 17:41:02,670][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [608/1266000]	Time 0.60 (0.60)	Data 0.51 (0.51)	Loss 28.85569 (28.85569)	LR 0.00010	
+[2023-08-14 17:41:02,781][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [609/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.93342 (27.93342)	LR 0.00010	
+[2023-08-14 17:41:02,872][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [610/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.33846 (28.33846)	LR 0.00010	
+[2023-08-14 17:41:03,387][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [611/1266000]	Time 0.51 (0.51)	Data 0.41 (0.41)	Loss 28.07420 (28.07420)	LR 0.00010	
+[2023-08-14 17:41:03,614][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [612/1266000]	Time 0.23 (0.23)	Data 0.12 (0.12)	Loss 28.59521 (28.59521)	LR 0.00010	
+[2023-08-14 17:41:03,737][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [613/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.27028 (28.27028)	LR 0.00010	
+[2023-08-14 17:41:04,318][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [614/1266000]	Time 0.58 (0.58)	Data 0.00 (0.00)	Loss 28.64984 (28.64984)	LR 0.00010	
+[2023-08-14 17:41:04,712][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [615/1266000]	Time 0.39 (0.39)	Data 0.29 (0.29)	Loss 28.48326 (28.48326)	LR 0.00010	
+[2023-08-14 17:41:04,826][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [616/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.32004 (28.32004)	LR 0.00010	
+[2023-08-14 17:41:05,706][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [617/1266000]	Time 0.88 (0.88)	Data 0.00 (0.00)	Loss 27.88965 (27.88965)	LR 0.00010	
+[2023-08-14 17:41:05,816][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [618/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.83364 (28.83364)	LR 0.00010	
+[2023-08-14 17:41:05,920][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [619/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.94237 (27.94237)	LR 0.00010	
+[2023-08-14 17:41:06,057][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [620/1266000]	Time 0.14 (0.14)	Data 0.03 (0.03)	Loss 27.77939 (27.77939)	LR 0.00010	
+[2023-08-14 17:41:06,608][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [621/1266000]	Time 0.55 (0.55)	Data 0.00 (0.00)	Loss 27.57789 (27.57789)	LR 0.00010	
+[2023-08-14 17:41:06,712][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [622/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.41848 (27.41848)	LR 0.00010	
+[2023-08-14 17:41:06,817][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [623/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.11424 (28.11424)	LR 0.00010	
+[2023-08-14 17:41:07,052][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [624/1266000]	Time 0.23 (0.23)	Data 0.13 (0.13)	Loss 27.98964 (27.98964)	LR 0.00010	
+[2023-08-14 17:41:07,526][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [625/1266000]	Time 0.47 (0.47)	Data 0.00 (0.00)	Loss 28.44210 (28.44210)	LR 0.00010	
+[2023-08-14 17:41:07,642][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [626/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.65106 (28.65106)	LR 0.00010	
+[2023-08-14 17:41:08,223][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [627/1266000]	Time 0.58 (0.58)	Data 0.49 (0.49)	Loss 27.73211 (27.73211)	LR 0.00010	
+[2023-08-14 17:41:08,335][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [628/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.74806 (27.74806)	LR 0.00010	
+[2023-08-14 17:41:08,560][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [629/1266000]	Time 0.22 (0.22)	Data 0.00 (0.00)	Loss 28.70507 (28.70507)	LR 0.00010	
+[2023-08-14 17:41:08,677][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [630/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.29807 (27.29807)	LR 0.00010	
+[2023-08-14 17:41:09,665][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [631/1266000]	Time 0.99 (0.99)	Data 0.89 (0.89)	Loss 27.93137 (27.93137)	LR 0.00010	
+[2023-08-14 17:41:09,870][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [632/1266000]	Time 0.20 (0.20)	Data 0.00 (0.00)	Loss 27.23057 (27.23057)	LR 0.00010	
+[2023-08-14 17:41:09,968][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [633/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.72897 (29.72897)	LR 0.00010	
+[2023-08-14 17:41:10,071][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [634/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.59224 (28.59224)	LR 0.00010	
+[2023-08-14 17:41:10,484][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [635/1266000]	Time 0.41 (0.41)	Data 0.30 (0.30)	Loss 27.25482 (27.25482)	LR 0.00010	
+[2023-08-14 17:41:11,601][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [636/1266000]	Time 1.12 (1.12)	Data 0.00 (0.00)	Loss 28.40654 (28.40654)	LR 0.00010	
+[2023-08-14 17:41:11,731][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [637/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 27.83949 (27.83949)	LR 0.00010	
+[2023-08-14 17:41:11,831][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [638/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.41415 (27.41415)	LR 0.00010	
+[2023-08-14 17:41:11,931][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [639/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 26.68387 (26.68387)	LR 0.00010	
+[2023-08-14 17:41:12,031][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [640/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.58490 (27.58490)	LR 0.00010	
+[2023-08-14 17:41:12,144][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [641/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.68312 (28.68312)	LR 0.00010	
+[2023-08-14 17:41:12,244][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [642/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.26210 (28.26210)	LR 0.00010	
+[2023-08-14 17:41:13,027][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [643/1266000]	Time 0.78 (0.78)	Data 0.67 (0.67)	Loss 28.27186 (28.27186)	LR 0.00010	
+[2023-08-14 17:41:13,129][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [644/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.75170 (28.75170)	LR 0.00010	
+[2023-08-14 17:41:13,324][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [645/1266000]	Time 0.19 (0.19)	Data 0.00 (0.00)	Loss 28.11705 (28.11705)	LR 0.00010	
+[2023-08-14 17:41:13,421][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [646/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.24291 (28.24291)	LR 0.00010	
+[2023-08-14 17:41:13,694][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [647/1266000]	Time 0.27 (0.27)	Data 0.15 (0.15)	Loss 27.94476 (27.94476)	LR 0.00010	
+[2023-08-14 17:41:13,902][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [648/1266000]	Time 0.21 (0.21)	Data 0.00 (0.00)	Loss 27.38681 (27.38681)	LR 0.00010	
+[2023-08-14 17:41:14,389][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [649/1266000]	Time 0.49 (0.49)	Data 0.00 (0.00)	Loss 28.27266 (28.27266)	LR 0.00010	
+[2023-08-14 17:41:14,499][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [650/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.03865 (28.03865)	LR 0.00010	
+[2023-08-14 17:41:14,722][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [651/1266000]	Time 0.22 (0.22)	Data 0.10 (0.10)	Loss 27.80522 (27.80522)	LR 0.00010	
+[2023-08-14 17:41:14,818][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [652/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.37817 (28.37817)	LR 0.00010	
+[2023-08-14 17:41:15,280][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [653/1266000]	Time 0.46 (0.46)	Data 0.15 (0.15)	Loss 27.09708 (27.09708)	LR 0.00010	
+[2023-08-14 17:41:15,381][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [654/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.90531 (27.90531)	LR 0.00010	
+[2023-08-14 17:41:15,504][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [655/1266000]	Time 0.12 (0.12)	Data 0.02 (0.02)	Loss 28.11162 (28.11162)	LR 0.00010	
+[2023-08-14 17:41:15,741][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [656/1266000]	Time 0.24 (0.24)	Data 0.00 (0.00)	Loss 27.53419 (27.53419)	LR 0.00010	
+[2023-08-14 17:41:16,791][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [657/1266000]	Time 1.05 (1.05)	Data 0.36 (0.36)	Loss 28.67090 (28.67090)	LR 0.00010	
+[2023-08-14 17:41:16,890][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [658/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.75406 (27.75406)	LR 0.00010	
+[2023-08-14 17:41:16,991][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [659/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.78572 (27.78572)	LR 0.00010	
+[2023-08-14 17:41:17,087][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [660/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.68752 (28.68752)	LR 0.00010	
+[2023-08-14 17:41:17,822][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [661/1266000]	Time 0.73 (0.73)	Data 0.08 (0.08)	Loss 27.44522 (27.44522)	LR 0.00010	
+[2023-08-14 17:41:17,940][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [662/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.55573 (27.55573)	LR 0.00010	
+[2023-08-14 17:41:18,047][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [663/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.77616 (28.77616)	LR 0.00010	
+[2023-08-14 17:41:18,150][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [664/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.55978 (28.55978)	LR 0.00010	
+[2023-08-14 17:41:18,757][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [665/1266000]	Time 0.61 (0.61)	Data 0.00 (0.00)	Loss 29.14168 (29.14168)	LR 0.00010	
+[2023-08-14 17:41:18,854][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [666/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.82954 (27.82954)	LR 0.00010	
+[2023-08-14 17:41:18,963][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [667/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.11722 (29.11722)	LR 0.00010	
+[2023-08-14 17:41:19,064][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [668/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.77206 (27.77206)	LR 0.00010	
+[2023-08-14 17:41:20,197][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [669/1266000]	Time 1.13 (1.13)	Data 0.00 (0.00)	Loss 27.97587 (27.97587)	LR 0.00010	
+[2023-08-14 17:41:20,295][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [670/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.68465 (27.68465)	LR 0.00010	
+[2023-08-14 17:41:20,403][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [671/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 26.90045 (26.90045)	LR 0.00010	
+[2023-08-14 17:41:20,513][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [672/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.71463 (27.71463)	LR 0.00010	
+[2023-08-14 17:41:21,042][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [673/1266000]	Time 0.53 (0.53)	Data 0.00 (0.00)	Loss 28.08941 (28.08941)	LR 0.00010	
+[2023-08-14 17:41:21,148][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [674/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.94531 (28.94531)	LR 0.00010	
+[2023-08-14 17:41:21,253][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [675/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.04700 (28.04700)	LR 0.00010	
+[2023-08-14 17:41:21,363][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [676/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.36401 (28.36401)	LR 0.00010	
+[2023-08-14 17:41:21,895][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [677/1266000]	Time 0.53 (0.53)	Data 0.00 (0.00)	Loss 28.59829 (28.59829)	LR 0.00010	
+[2023-08-14 17:41:21,998][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [678/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.68050 (27.68050)	LR 0.00010	
+[2023-08-14 17:41:22,108][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [679/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.63425 (28.63425)	LR 0.00010	
+[2023-08-14 17:41:22,233][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [680/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.31556 (28.31556)	LR 0.00010	
+[2023-08-14 17:41:22,896][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [681/1266000]	Time 0.66 (0.66)	Data 0.00 (0.00)	Loss 28.04152 (28.04152)	LR 0.00010	
+[2023-08-14 17:41:22,999][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [682/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.54556 (28.54556)	LR 0.00010	
+[2023-08-14 17:41:23,115][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [683/1266000]	Time 0.11 (0.11)	Data 0.01 (0.01)	Loss 28.45883 (28.45883)	LR 0.00010	
+[2023-08-14 17:41:23,296][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [684/1266000]	Time 0.18 (0.18)	Data 0.00 (0.00)	Loss 28.84027 (28.84027)	LR 0.00010	
+[2023-08-14 17:41:24,376][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [685/1266000]	Time 1.08 (1.08)	Data 0.22 (0.22)	Loss 27.94076 (27.94076)	LR 0.00010	
+[2023-08-14 17:41:24,489][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [686/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.97255 (27.97255)	LR 0.00010	
+[2023-08-14 17:41:24,582][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [687/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.42986 (28.42986)	LR 0.00010	
+[2023-08-14 17:41:24,959][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [688/1266000]	Time 0.38 (0.38)	Data 0.00 (0.00)	Loss 27.66612 (27.66612)	LR 0.00010	
+[2023-08-14 17:41:25,761][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [689/1266000]	Time 0.80 (0.80)	Data 0.00 (0.00)	Loss 27.10485 (27.10485)	LR 0.00010	
+[2023-08-14 17:41:25,860][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [690/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.88499 (27.88499)	LR 0.00010	
+[2023-08-14 17:41:25,960][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [691/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.32548 (27.32548)	LR 0.00010	
+[2023-08-14 17:41:26,062][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [692/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 26.03711 (26.03711)	LR 0.00010	
+[2023-08-14 17:41:26,830][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [693/1266000]	Time 0.77 (0.77)	Data 0.00 (0.00)	Loss 28.38007 (28.38007)	LR 0.00010	
+[2023-08-14 17:41:26,938][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [694/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.09048 (28.09048)	LR 0.00010	
+[2023-08-14 17:41:27,047][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [695/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.89797 (27.89797)	LR 0.00010	
+[2023-08-14 17:41:27,161][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [696/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.74552 (27.74552)	LR 0.00010	
+[2023-08-14 17:41:27,775][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [697/1266000]	Time 0.61 (0.61)	Data 0.00 (0.00)	Loss 28.21940 (28.21940)	LR 0.00010	
+[2023-08-14 17:41:27,889][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [698/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.79498 (27.79498)	LR 0.00010	
+[2023-08-14 17:41:27,996][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [699/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.82790 (28.82790)	LR 0.00010	
+[2023-08-14 17:41:28,105][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [700/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.75266 (27.75266)	LR 0.00010	
+[2023-08-14 17:41:28,948][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [701/1266000]	Time 0.84 (0.84)	Data 0.00 (0.00)	Loss 27.69625 (27.69625)	LR 0.00010	
+[2023-08-14 17:41:29,049][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [702/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.26506 (27.26506)	LR 0.00010	
+[2023-08-14 17:41:29,150][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [703/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.23910 (28.23910)	LR 0.00010	
+[2023-08-14 17:41:29,266][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [704/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 26.89854 (26.89854)	LR 0.00010	
+[2023-08-14 17:41:29,877][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [705/1266000]	Time 0.61 (0.61)	Data 0.00 (0.00)	Loss 27.63051 (27.63051)	LR 0.00010	
+[2023-08-14 17:41:30,170][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [706/1266000]	Time 0.29 (0.29)	Data 0.00 (0.00)	Loss 28.65194 (28.65194)	LR 0.00010	
+[2023-08-14 17:41:30,288][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [707/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.85110 (27.85110)	LR 0.00010	
+[2023-08-14 17:41:30,394][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [708/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.17915 (27.17915)	LR 0.00010	
+[2023-08-14 17:41:30,729][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [709/1266000]	Time 0.33 (0.33)	Data 0.00 (0.00)	Loss 27.72714 (27.72714)	LR 0.00010	
+[2023-08-14 17:41:31,109][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [710/1266000]	Time 0.38 (0.38)	Data 0.00 (0.00)	Loss 27.35104 (27.35104)	LR 0.00010	
+[2023-08-14 17:41:31,433][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [711/1266000]	Time 0.32 (0.32)	Data 0.00 (0.00)	Loss 27.95007 (27.95007)	LR 0.00010	
+[2023-08-14 17:41:31,538][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [712/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.46961 (28.46961)	LR 0.00010	
+[2023-08-14 17:41:32,120][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [713/1266000]	Time 0.58 (0.58)	Data 0.00 (0.00)	Loss 28.13322 (28.13322)	LR 0.00010	
+[2023-08-14 17:41:32,281][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [714/1266000]	Time 0.16 (0.16)	Data 0.00 (0.00)	Loss 28.04661 (28.04661)	LR 0.00010	
+[2023-08-14 17:41:32,491][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [715/1266000]	Time 0.21 (0.21)	Data 0.00 (0.00)	Loss 27.80499 (27.80499)	LR 0.00010	
+[2023-08-14 17:41:32,599][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [716/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.13649 (29.13649)	LR 0.00010	
+[2023-08-14 17:41:32,708][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [717/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.29621 (27.29621)	LR 0.00010	
+[2023-08-14 17:41:33,561][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [718/1266000]	Time 0.85 (0.85)	Data 0.00 (0.00)	Loss 28.53205 (28.53205)	LR 0.00010	
+[2023-08-14 17:41:33,668][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [719/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.29219 (27.29219)	LR 0.00010	
+[2023-08-14 17:41:33,782][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [720/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.29454 (28.29454)	LR 0.00010	
+[2023-08-14 17:41:33,902][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [721/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.54739 (27.54739)	LR 0.00010	
+[2023-08-14 17:41:34,168][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [722/1266000]	Time 0.26 (0.26)	Data 0.00 (0.00)	Loss 28.31928 (28.31928)	LR 0.00010	
+[2023-08-14 17:41:34,290][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [723/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.46306 (27.46306)	LR 0.00010	
+[2023-08-14 17:41:34,388][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [724/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.06834 (28.06834)	LR 0.00010	
+[2023-08-14 17:41:34,507][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [725/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.25946 (28.25946)	LR 0.00010	
+[2023-08-14 17:41:35,232][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [726/1266000]	Time 0.72 (0.72)	Data 0.00 (0.00)	Loss 27.78220 (27.78220)	LR 0.00010	
+[2023-08-14 17:41:35,791][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [727/1266000]	Time 0.56 (0.56)	Data 0.00 (0.00)	Loss 27.65198 (27.65198)	LR 0.00010	
+[2023-08-14 17:41:35,910][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [728/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.71749 (27.71749)	LR 0.00010	
+[2023-08-14 17:41:36,006][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [729/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.42871 (27.42871)	LR 0.00010	
+[2023-08-14 17:41:36,397][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [730/1266000]	Time 0.39 (0.39)	Data 0.00 (0.00)	Loss 28.34853 (28.34853)	LR 0.00010	
+[2023-08-14 17:41:37,134][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [731/1266000]	Time 0.73 (0.73)	Data 0.00 (0.00)	Loss 28.53236 (28.53236)	LR 0.00010	
+[2023-08-14 17:41:37,233][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [732/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.72534 (28.72534)	LR 0.00010	
+[2023-08-14 17:41:37,348][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [733/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.29472 (27.29472)	LR 0.00010	
+[2023-08-14 17:41:37,473][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [734/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.53983 (28.53983)	LR 0.00010	
+[2023-08-14 17:41:38,247][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [735/1266000]	Time 0.77 (0.77)	Data 0.00 (0.00)	Loss 27.83072 (27.83072)	LR 0.00010	
+[2023-08-14 17:41:38,342][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [736/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 27.99597 (27.99597)	LR 0.00010	
+[2023-08-14 17:41:38,430][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [737/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.23595 (28.23595)	LR 0.00010	
+[2023-08-14 17:41:38,535][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [738/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.64338 (27.64338)	LR 0.00010	
+[2023-08-14 17:41:39,266][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [739/1266000]	Time 0.73 (0.73)	Data 0.00 (0.00)	Loss 29.10114 (29.10114)	LR 0.00010	
+[2023-08-14 17:41:39,372][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [740/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.80191 (27.80191)	LR 0.00010	
+[2023-08-14 17:41:39,482][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [741/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.65202 (27.65202)	LR 0.00010	
+[2023-08-14 17:41:39,581][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [742/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.40011 (28.40011)	LR 0.00010	
+[2023-08-14 17:41:40,562][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [743/1266000]	Time 0.98 (0.98)	Data 0.00 (0.00)	Loss 26.98854 (26.98854)	LR 0.00010	
+[2023-08-14 17:41:40,661][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [744/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.14512 (29.14512)	LR 0.00010	
+[2023-08-14 17:41:40,756][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [745/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 27.76103 (27.76103)	LR 0.00010	
+[2023-08-14 17:41:40,854][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [746/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 26.98549 (26.98549)	LR 0.00010	
+[2023-08-14 17:41:41,354][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [747/1266000]	Time 0.50 (0.50)	Data 0.00 (0.00)	Loss 27.53849 (27.53849)	LR 0.00010	
+[2023-08-14 17:41:41,457][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [748/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.89767 (27.89767)	LR 0.00010	
+[2023-08-14 17:41:41,552][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [749/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 27.94144 (27.94144)	LR 0.00010	
+[2023-08-14 17:41:41,654][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [750/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.04539 (28.04539)	LR 0.00010	
+[2023-08-14 17:41:42,656][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [751/1266000]	Time 1.00 (1.00)	Data 0.00 (0.00)	Loss 27.60496 (27.60496)	LR 0.00010	
+[2023-08-14 17:41:42,769][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [752/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.45012 (27.45012)	LR 0.00010	
+[2023-08-14 17:41:42,877][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [753/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.04489 (28.04489)	LR 0.00010	
+[2023-08-14 17:41:42,985][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [754/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.29637 (28.29637)	LR 0.00010	
+[2023-08-14 17:41:43,874][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [755/1266000]	Time 0.89 (0.89)	Data 0.00 (0.00)	Loss 28.30566 (28.30566)	LR 0.00010	
+[2023-08-14 17:41:43,973][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [756/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.50626 (27.50626)	LR 0.00010	
+[2023-08-14 17:41:44,082][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [757/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.06722 (28.06722)	LR 0.00010	
+[2023-08-14 17:41:44,213][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [758/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 28.54340 (28.54340)	LR 0.00010	
+[2023-08-14 17:41:44,544][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [759/1266000]	Time 0.33 (0.33)	Data 0.00 (0.00)	Loss 27.72915 (27.72915)	LR 0.00010	
+[2023-08-14 17:41:44,794][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [760/1266000]	Time 0.25 (0.25)	Data 0.00 (0.00)	Loss 27.16737 (27.16737)	LR 0.00010	
+[2023-08-14 17:41:44,904][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [761/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.71891 (28.71891)	LR 0.00010	
+[2023-08-14 17:41:45,017][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [762/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 26.73171 (26.73171)	LR 0.00010	
+[2023-08-14 17:41:45,326][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [763/1266000]	Time 0.31 (0.31)	Data 0.00 (0.00)	Loss 27.97503 (27.97503)	LR 0.00010	
+[2023-08-14 17:41:46,133][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [764/1266000]	Time 0.81 (0.81)	Data 0.00 (0.00)	Loss 28.31262 (28.31262)	LR 0.00010	
+[2023-08-14 17:41:46,243][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [765/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.38649 (28.38649)	LR 0.00010	
+[2023-08-14 17:41:46,361][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [766/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.07230 (28.07230)	LR 0.00010	
+[2023-08-14 17:41:46,459][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [767/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.29915 (28.29915)	LR 0.00010	
+[2023-08-14 17:41:46,929][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [768/1266000]	Time 0.47 (0.47)	Data 0.00 (0.00)	Loss 28.35971 (28.35971)	LR 0.00010	
+[2023-08-14 17:41:47,028][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [769/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.57361 (28.57361)	LR 0.00010	
+[2023-08-14 17:41:47,136][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [770/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.59244 (27.59244)	LR 0.00010	
+[2023-08-14 17:41:47,540][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [771/1266000]	Time 0.40 (0.40)	Data 0.00 (0.00)	Loss 28.39026 (28.39026)	LR 0.00010	
+[2023-08-14 17:41:48,053][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [772/1266000]	Time 0.51 (0.51)	Data 0.00 (0.00)	Loss 28.07013 (28.07013)	LR 0.00010	
+[2023-08-14 17:41:48,170][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [773/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.27325 (28.27325)	LR 0.00010	
+[2023-08-14 17:41:48,273][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [774/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.03085 (28.03085)	LR 0.00010	
+[2023-08-14 17:41:48,363][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [775/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 29.03042 (29.03042)	LR 0.00010	
+[2023-08-14 17:41:49,087][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [776/1266000]	Time 0.72 (0.72)	Data 0.00 (0.00)	Loss 28.45242 (28.45242)	LR 0.00010	
+[2023-08-14 17:41:49,257][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [777/1266000]	Time 0.17 (0.17)	Data 0.07 (0.07)	Loss 28.35715 (28.35715)	LR 0.00010	
+[2023-08-14 17:41:49,362][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [778/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.12079 (28.12079)	LR 0.00010	
+[2023-08-14 17:41:49,456][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [779/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 27.16986 (27.16986)	LR 0.00010	
+[2023-08-14 17:41:50,204][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [780/1266000]	Time 0.75 (0.75)	Data 0.00 (0.00)	Loss 27.80145 (27.80145)	LR 0.00010	
+[2023-08-14 17:41:50,315][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [781/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.06092 (28.06092)	LR 0.00010	
+[2023-08-14 17:41:50,420][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [782/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 29.27373 (29.27373)	LR 0.00010	
+[2023-08-14 17:41:50,521][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [783/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 26.43397 (26.43397)	LR 0.00010	
+[2023-08-14 17:41:51,332][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [784/1266000]	Time 0.81 (0.81)	Data 0.00 (0.00)	Loss 27.98233 (27.98233)	LR 0.00010	
+[2023-08-14 17:41:51,438][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [785/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.32302 (27.32302)	LR 0.00010	
+[2023-08-14 17:41:51,537][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [786/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.21531 (28.21531)	LR 0.00010	
+[2023-08-14 17:41:51,657][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [787/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.51589 (28.51589)	LR 0.00010	
+[2023-08-14 17:41:52,625][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [788/1266000]	Time 0.97 (0.97)	Data 0.00 (0.00)	Loss 27.70572 (27.70572)	LR 0.00010	
+[2023-08-14 17:41:52,728][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [789/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.42086 (28.42086)	LR 0.00010	
+[2023-08-14 17:41:52,881][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [790/1266000]	Time 0.15 (0.15)	Data 0.00 (0.00)	Loss 26.84674 (26.84674)	LR 0.00010	
+[2023-08-14 17:41:52,992][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [791/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.18163 (27.18163)	LR 0.00010	
+[2023-08-14 17:41:53,539][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [792/1266000]	Time 0.55 (0.55)	Data 0.00 (0.00)	Loss 28.40443 (28.40443)	LR 0.00010	
+[2023-08-14 17:41:53,652][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [793/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.16501 (29.16501)	LR 0.00010	
+[2023-08-14 17:41:53,769][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [794/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.34042 (28.34042)	LR 0.00010	
+[2023-08-14 17:41:53,879][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [795/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.02657 (28.02657)	LR 0.00010	
+[2023-08-14 17:41:54,261][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [796/1266000]	Time 0.38 (0.38)	Data 0.00 (0.00)	Loss 28.97876 (28.97876)	LR 0.00010	
+[2023-08-14 17:41:55,433][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [797/1266000]	Time 1.17 (1.17)	Data 0.20 (0.20)	Loss 27.83967 (27.83967)	LR 0.00010	
+[2023-08-14 17:41:55,540][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [798/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.42690 (27.42690)	LR 0.00010	
+[2023-08-14 17:41:55,654][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [799/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.52312 (27.52312)	LR 0.00010	
+[2023-08-14 17:41:55,778][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [800/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.95405 (27.95405)	LR 0.00010	
+[2023-08-14 17:41:56,549][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [801/1266000]	Time 0.77 (0.77)	Data 0.04 (0.04)	Loss 27.98264 (27.98264)	LR 0.00010	
+[2023-08-14 17:41:56,656][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [802/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.37780 (27.37780)	LR 0.00010	
+[2023-08-14 17:41:56,773][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [803/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.59871 (28.59871)	LR 0.00010	
+[2023-08-14 17:41:56,897][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [804/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.78041 (27.78041)	LR 0.00010	
+[2023-08-14 17:41:57,619][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [805/1266000]	Time 0.72 (0.72)	Data 0.00 (0.00)	Loss 28.23479 (28.23479)	LR 0.00010	
+[2023-08-14 17:41:57,752][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [806/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 26.90605 (26.90605)	LR 0.00010	
+[2023-08-14 17:41:57,869][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [807/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.37410 (28.37410)	LR 0.00010	
+[2023-08-14 17:41:57,971][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [808/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.25324 (28.25324)	LR 0.00010	
+[2023-08-14 17:41:58,418][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [809/1266000]	Time 0.45 (0.45)	Data 0.27 (0.27)	Loss 27.64839 (27.64839)	LR 0.00010	
+[2023-08-14 17:41:58,534][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [810/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.94390 (27.94390)	LR 0.00010	
+[2023-08-14 17:41:59,056][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [811/1266000]	Time 0.52 (0.52)	Data 0.42 (0.42)	Loss 27.97366 (27.97366)	LR 0.00010	
+[2023-08-14 17:41:59,163][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [812/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 26.80977 (26.80977)	LR 0.00010	
+[2023-08-14 17:41:59,525][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [813/1266000]	Time 0.36 (0.36)	Data 0.26 (0.26)	Loss 28.46230 (28.46230)	LR 0.00010	
+[2023-08-14 17:41:59,631][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [814/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.19061 (27.19061)	LR 0.00010	
+[2023-08-14 17:42:00,404][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [815/1266000]	Time 0.77 (0.77)	Data 0.67 (0.67)	Loss 27.45869 (27.45869)	LR 0.00010	
+[2023-08-14 17:42:00,514][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [816/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.38520 (27.38520)	LR 0.00010	
+[2023-08-14 17:42:00,719][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [817/1266000]	Time 0.20 (0.20)	Data 0.11 (0.11)	Loss 28.12726 (28.12726)	LR 0.00010	
+[2023-08-14 17:42:00,847][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [818/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 27.53545 (27.53545)	LR 0.00010	
+[2023-08-14 17:42:01,526][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [819/1266000]	Time 0.68 (0.68)	Data 0.56 (0.56)	Loss 28.02897 (28.02897)	LR 0.00010	
+[2023-08-14 17:42:01,647][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [820/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.86622 (27.86622)	LR 0.00010	
+[2023-08-14 17:42:01,739][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [821/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 27.17749 (27.17749)	LR 0.00010	
+[2023-08-14 17:42:01,837][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [822/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.83623 (27.83623)	LR 0.00010	
+[2023-08-14 17:42:02,567][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [823/1266000]	Time 0.73 (0.73)	Data 0.63 (0.63)	Loss 27.17036 (27.17036)	LR 0.00010	
+[2023-08-14 17:42:02,688][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [824/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.85061 (27.85061)	LR 0.00010	
+[2023-08-14 17:42:03,226][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [825/1266000]	Time 0.54 (0.54)	Data 0.00 (0.00)	Loss 26.76663 (26.76663)	LR 0.00010	
+[2023-08-14 17:42:03,354][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [826/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 27.19200 (27.19200)	LR 0.00010	
+[2023-08-14 17:42:03,645][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [827/1266000]	Time 0.29 (0.29)	Data 0.19 (0.19)	Loss 26.98584 (26.98584)	LR 0.00010	
+[2023-08-14 17:42:03,765][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [828/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.72480 (28.72480)	LR 0.00010	
+[2023-08-14 17:42:04,805][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [829/1266000]	Time 1.04 (1.04)	Data 0.00 (0.00)	Loss 28.39849 (28.39849)	LR 0.00010	
+[2023-08-14 17:42:04,922][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [830/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.22097 (27.22097)	LR 0.00010	
+[2023-08-14 17:42:05,026][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [831/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.82695 (27.82695)	LR 0.00010	
+[2023-08-14 17:42:05,144][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [832/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.56475 (27.56475)	LR 0.00010	
+[2023-08-14 17:42:05,928][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [833/1266000]	Time 0.78 (0.78)	Data 0.00 (0.00)	Loss 28.94777 (28.94777)	LR 0.00010	
+[2023-08-14 17:42:06,041][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [834/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.25898 (27.25898)	LR 0.00010	
+[2023-08-14 17:42:06,150][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [835/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.57854 (27.57854)	LR 0.00010	
+[2023-08-14 17:42:06,271][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [836/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.41764 (27.41764)	LR 0.00010	
+[2023-08-14 17:42:07,308][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [837/1266000]	Time 1.03 (1.03)	Data 0.00 (0.00)	Loss 27.17895 (27.17895)	LR 0.00010	
+[2023-08-14 17:42:07,422][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [838/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.55098 (28.55098)	LR 0.00010	
+[2023-08-14 17:42:07,539][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [839/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.51912 (27.51912)	LR 0.00010	
+[2023-08-14 17:42:07,654][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [840/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 29.00573 (29.00573)	LR 0.00010	
+[2023-08-14 17:42:07,768][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [841/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.72231 (27.72231)	LR 0.00010	
+[2023-08-14 17:42:07,874][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [842/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.60892 (27.60892)	LR 0.00010	
+[2023-08-14 17:42:08,725][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [843/1266000]	Time 0.85 (0.85)	Data 0.75 (0.75)	Loss 28.51182 (28.51182)	LR 0.00010	
+[2023-08-14 17:42:08,838][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [844/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.02220 (27.02220)	LR 0.00010	
+[2023-08-14 17:42:08,954][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [845/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.75618 (27.75618)	LR 0.00010	
+[2023-08-14 17:42:09,053][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [846/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.66494 (27.66494)	LR 0.00010	
+[2023-08-14 17:42:09,295][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [847/1266000]	Time 0.24 (0.24)	Data 0.13 (0.13)	Loss 26.91308 (26.91308)	LR 0.00010	
+[2023-08-14 17:42:09,405][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [848/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.69908 (27.69908)	LR 0.00010	
+[2023-08-14 17:42:10,366][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [849/1266000]	Time 0.96 (0.96)	Data 0.00 (0.00)	Loss 27.85014 (27.85014)	LR 0.00010	
+[2023-08-14 17:42:10,475][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [850/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.74584 (27.74584)	LR 0.00010	
+[2023-08-14 17:42:10,571][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [851/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 28.41558 (28.41558)	LR 0.00010	
+[2023-08-14 17:42:10,688][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [852/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.36050 (28.36050)	LR 0.00010	
+[2023-08-14 17:42:11,267][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [853/1266000]	Time 0.58 (0.58)	Data 0.00 (0.00)	Loss 28.98675 (28.98675)	LR 0.00010	
+[2023-08-14 17:42:11,479][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [854/1266000]	Time 0.21 (0.21)	Data 0.12 (0.12)	Loss 26.90622 (26.90622)	LR 0.00010	
+[2023-08-14 17:42:11,591][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [855/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.82815 (27.82815)	LR 0.00010	
+[2023-08-14 17:42:11,698][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [856/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.07468 (27.07468)	LR 0.00010	
+[2023-08-14 17:42:12,392][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [857/1266000]	Time 0.69 (0.69)	Data 0.00 (0.00)	Loss 27.61960 (27.61960)	LR 0.00010	
+[2023-08-14 17:42:12,510][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [858/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.81058 (28.81058)	LR 0.00010	
+[2023-08-14 17:42:12,712][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [859/1266000]	Time 0.20 (0.20)	Data 0.00 (0.00)	Loss 27.51970 (27.51970)	LR 0.00010	
+[2023-08-14 17:42:12,812][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [860/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 28.56621 (28.56621)	LR 0.00010	
+[2023-08-14 17:42:13,000][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [861/1266000]	Time 0.19 (0.19)	Data 0.00 (0.00)	Loss 27.42460 (27.42460)	LR 0.00010	
+[2023-08-14 17:42:13,674][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [862/1266000]	Time 0.67 (0.67)	Data 0.58 (0.58)	Loss 28.17806 (28.17806)	LR 0.00010	
+[2023-08-14 17:42:14,027][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [863/1266000]	Time 0.35 (0.35)	Data 0.00 (0.00)	Loss 27.50477 (27.50477)	LR 0.00010	
+[2023-08-14 17:42:14,130][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [864/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.81791 (27.81791)	LR 0.00010	
+[2023-08-14 17:42:14,262][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [865/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 27.36094 (27.36094)	LR 0.00010	
+[2023-08-14 17:42:14,719][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [866/1266000]	Time 0.45 (0.45)	Data 0.35 (0.35)	Loss 26.44714 (26.44714)	LR 0.00010	
+[2023-08-14 17:42:14,984][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [867/1266000]	Time 0.26 (0.26)	Data 0.00 (0.00)	Loss 26.14353 (26.14353)	LR 0.00010	
+[2023-08-14 17:42:15,096][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [868/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.87607 (27.87607)	LR 0.00010	
+[2023-08-14 17:42:15,228][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [869/1266000]	Time 0.13 (0.13)	Data 0.00 (0.00)	Loss 27.64921 (27.64921)	LR 0.00010	
+[2023-08-14 17:42:16,068][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [870/1266000]	Time 0.84 (0.84)	Data 0.74 (0.74)	Loss 27.84264 (27.84264)	LR 0.00010	
+[2023-08-14 17:42:16,184][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [871/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 27.66304 (27.66304)	LR 0.00010	
+[2023-08-14 17:42:16,302][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [872/1266000]	Time 0.12 (0.12)	Data 0.00 (0.00)	Loss 28.58032 (28.58032)	LR 0.00010	
+[2023-08-14 17:42:16,396][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [873/1266000]	Time 0.09 (0.09)	Data 0.00 (0.00)	Loss 27.18030 (27.18030)	LR 0.00010	
+[2023-08-14 17:42:17,127][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [874/1266000]	Time 0.73 (0.73)	Data 0.64 (0.64)	Loss 26.83452 (26.83452)	LR 0.00010	
+[2023-08-14 17:42:17,842][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [875/1266000]	Time 0.71 (0.71)	Data 0.00 (0.00)	Loss 28.60702 (28.60702)	LR 0.00010	
+[2023-08-14 17:42:17,957][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [876/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 27.28207 (27.28207)	LR 0.00010	
+[2023-08-14 17:42:18,060][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [877/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 26.38575 (26.38575)	LR 0.00010	
+[2023-08-14 17:42:18,165][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [878/1266000]	Time 0.10 (0.10)	Data 0.00 (0.00)	Loss 27.46566 (27.46566)	LR 0.00010	
+[2023-08-14 17:42:18,382][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [879/1266000]	Time 0.22 (0.22)	Data 0.00 (0.00)	Loss 27.93622 (27.93622)	LR 0.00010	
+[2023-08-14 17:42:18,492][   train_val.py][line: 235][    INFO] Epoch: [1/1000]	Iter: [880/1266000]	Time 0.11 (0.11)	Data 0.00 (0.00)	Loss 28.59084 (28.59084)	LR 0.00010	
