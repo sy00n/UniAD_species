@@ -31,7 +31,7 @@ from utils.optimizer_helper import get_optimizer
 from utils.vis_helper import visualize_compound, visualize_single
 
 parser = argparse.ArgumentParser(description="UniAD Framework")
-parser.add_argument("--config", default="./new_config.yaml")
+parser.add_argument("--config", default="./config.yaml")
 parser.add_argument("-e", "--evaluate", action="store_true")
 parser.add_argument("--local_rank", default=None, help="local rank for dist")
 
@@ -146,16 +146,11 @@ def main():
 
         if (epoch + 1) % config.trainer.val_freq_epoch == 0:
             ret_metrics = validate(val_loader, model)
-            # print('ret_metrics', ret_metrics)
             # only ret_metrics on rank0 is not empty
             if rank == 0:
                 ret_key_metric = ret_metrics[key_metric]
                 is_best = ret_key_metric >= best_metric
                 best_metric = max(ret_key_metric, best_metric)
-                
-                # Save checkpoint with epoch number in the filename
-                #checkpoint_name = "epoch_{}.pth.tar".format(epoch + 1)
-                os.makedirs(config.save_path, exist_ok=True)
                 save_checkpoint(
                     {
                         "epoch": epoch + 1,
@@ -272,9 +267,8 @@ def validate(val_loader, model):
         for i, input in enumerate(val_loader):
             # forward
             outputs = model(input)
-            y_true = input['label']
             dump(config.evaluator.eval_dir, outputs)
-            #print(next(model.parameters()).device)
+
             # record loss
             loss = 0
             for name, criterion_loss in criterion.items():
@@ -282,13 +276,6 @@ def validate(val_loader, model):
                 loss += weight * criterion_loss(outputs)
             num = len(outputs["filename"])
             losses.update(loss.item(), num)
-            
-            # Print data filename, predicted labels, and true labels
-            filenames = outputs["filename"]
-            predicted_labels = outputs["label"]
-            # for filename, predicted_label, true_label in zip(filenames, predicted_labels, y_true):
-            #     print("Filename: {}, Predicted Label: {}, True Label: {}".format(filename, predicted_label, true_label))  # Print to terminal
-                
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -312,11 +299,9 @@ def validate(val_loader, model):
     ret_metrics = {}  # only ret_metrics on rank0 is not empty
     if rank == 0:
         logger.info("Gathering final results ...")
-        #print(next(model.parameters()).device)
         # total loss
         logger.info(" * Loss {:.5f}\ttotal_num={}".format(final_loss, total_num.item()))
         fileinfos, preds, masks = merge_together(config.evaluator.eval_dir)
-        #print('fpm', fileinfos, preds, masks)
         shutil.rmtree(config.evaluator.eval_dir)
         # evaluate, log & vis
         ret_metrics = performances(fileinfos, preds, masks, config.evaluator.metrics)
