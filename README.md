@@ -1,3 +1,10 @@
+### 수정된 부분 설명
+- official repository에서 구현된 datasets/custom_dataset.py 파일은 사실상 mvtec 구조로 저장된 데이터를 위한 loader임.
+- custom_dataset.py로 데이터를 로딩하려먼 meta files(json파일들)을 만들어서 불러오는 식으로 구성되어 있는데, ood detection의 경우 test anomaly를 불러오는 부분에 있어서 json 파일을 모두 읽어오는 방식으로 수행 시, 너무 비효율적, evaluation 시 시간이 심각하게 소요됨)
+- 데이터 구조를 mvtec 구조로 강제화해야지만 실행 가능하다는 점도 비효율적임
+- 따라서 cifar10, species 과 같은 **natural image loader를 추가로 구현함** (datasets/species_dataset.py)
+  - cifar dataloader(datasets/cifar_dataset.py) 같은 경우도 마찬가지로 meta 파일들을 활용하는 방식으로 load되게 구현되어 있고 torchvision으로부터 데이터를 받아오게 되어있기 때문에 natural image를 위한 loader 구현이 필요한 상황이었음.
+
 # UniAD
 Official PyTorch Implementation of [A Unified Model for Multi-class Anomaly Detection](https://arxiv.org/abs/2206.03687), Accepted by NeurIPS 2022 Spotlight.
 
