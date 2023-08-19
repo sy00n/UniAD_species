@@ -178,7 +178,6 @@ def performances(fileinfos, preds, masks, config):
         preds_cls = np.concatenate(np.asarray(preds_cls), axis=0)  # N x H x W
         masks_cls = np.concatenate(np.asarray(masks_cls), axis=0)  # N x H x W
         data_meta = EvalDataMeta(preds_cls, masks_cls)
-        # Add print statement here to check data_meta
 
         # auc
         if config.get("auc", None):
