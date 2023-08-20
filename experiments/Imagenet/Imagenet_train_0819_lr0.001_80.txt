@@ -1,0 +1,761 @@
+/usr/local/lib/python3.8/dist-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[2023-08-19 17:54:18,076][   train_val.py][line:  63][    INFO] args: Namespace(config='/home/workspace/UniAD/experiments/Imagenet/new_config.yaml', evaluate=False, local_rank='0')
+[2023-08-19 17:54:18,078][   train_val.py][line:  64][    INFO] config: {'criterion': [{'kwargs': {'weight': 1.0},
+                'name': 'FeatureMSELoss',
+                'type': 'FeatureMSELoss'}],
+ 'dataset': {'batch_size': 512,
+             'image_reader': {'kwargs': {'color_mode': 'RGB',
+                                         'image_dir': '/home/data/anomaly_detection/semantic/imagenet30'},
+                              'type': 'opencv'},
+             'input_size': [224, 224],
+             'pixel_mean': [0.485, 0.456, 0.406],
+             'pixel_std': [0.229, 0.224, 0.225],
+             'test': {'root_dir': '/home/data/anomaly_detection/semantic/imagenet30/one_class_test'},
+             'train': {'hflip': False,
+                       'rebalance': False,
+                       'root_dir': '/home/data/anomaly_detection/semantic/imagenet30/one_class_train',
+                       'rotate': False,
+                       'vflip': False},
+             'type': 'Imagenet',
+             'workers': 4},
+ 'evaluator': {'eval_dir': '/home/data/Weight/sy_imagenet/result_eval_temp',
+               'key_metric': 'mean_mean_auc',
+               'metrics': {'auc': [{'name': 'mean'},
+                                   {'name': 'std'},
+                                   {'kwargs': {'avgpool_size': [16, 16]},
+                                    'name': 'max'}]},
+               'save_dir': '/home/data/Weight/sy_imagenet/result_eval_temp'},
+ 'exp_path': '/home/workspace/UniAD/experiments/Imagenet',
+ 'frozen_layers': ['backbone'],
+ 'log_path': '/home/data/Weight/sy_imagenet/log/',
+ 'net': [{'frozen': True,
+          'kwargs': {'outblocks': [1, 5, 9, 21, 31],
+                     'outstrides': [2, 4, 8, 16, 32],
+                     'pretrained': True},
+          'name': 'backbone',
+          'type': 'models.backbones.efficientnet_b4'},
+         {'kwargs': {'outplanes': [720], 'outstrides': [16]},
+          'name': 'neck',
+          'prev': 'backbone',
+          'type': 'models.necks.MFCN'},
+         {'kwargs': {'activation': 'relu',
+                     'dim_feedforward': 1024,
+                     'dropout': 0.1,
+                     'feature_jitter': {'prob': 1.0, 'scale': 20.0},
+                     'feature_size': [14, 14],
+                     'hidden_dim': 256,
+                     'initializer': {'method': 'xavier_uniform'},
+                     'neighbor_mask': {'mask': [True, True, True],
+                                       'neighbor_size': [7, 7]},
+                     'nhead': 8,
+                     'normalize_before': False,
+                     'num_decoder_layers': 4,
+                     'num_encoder_layers': 4,
+                     'pos_embed_type': 'learned',
+                     'save_recon': {'save_dir': '/home/data/Weight/sy_imagenet/result_recon'}},
+          'name': 'reconstruction',
+          'prev': 'neck',
+          'type': 'models.reconstructions.UniAD'}],
+ 'port': 11111,
+ 'random_seed': 131,
+ 'save_path': '/home/data/Weight/sy_imagenet/checkpoints/',
+ 'saver': {'always_save': True,
+           'auto_resume': True,
+           'load_path': '/home/data/Weight/sy_imagenet/checkpoints/ckpt_best.pth.tar',
+           'log_dir': '/home/data/Weight/sy_imagenet/log/',
+           'save_dir': '/home/data/Weight/sy_imagenet/checkpoints/'},
+ 'trainer': {'clip_max_norm': 0.1,
+             'lr_scheduler': {'kwargs': {'gamma': 0.1, 'step_size': 800},
+                              'type': 'StepLR'},
+             'max_epoch': 1000,
+             'optimizer': {'kwargs': {'lr': 0.001, 'weight_decay': 0.0001},
+                           'type': 'AdamW'},
+             'print_freq_step': 1,
+             'tb_freq_step': 1,
+             'val_freq_epoch': 10},
+ 'version': 'v1.0.0'}
+[2023-08-19 17:54:18,628][       utils.py][line: 740][    INFO]  not exist, load from https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/efficientnet-b4-6ed6700e.pth
+[2023-08-19 17:54:18,727][       utils.py][line: 761][    INFO] Loaded ImageNet pretrained efficientnet-b4
+[2023-08-19 17:54:22,404][   train_val.py][line:  90][    INFO] layers: ['backbone', 'neck', 'reconstruction']
+[2023-08-19 17:54:22,404][   train_val.py][line:  91][    INFO] active layers: ['neck', 'reconstruction']
+=> loading checkpoint '/home/data/Weight/sy_imagenet/checkpoints/ckpt.pth.tar'
+/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py:1383: UserWarning: positional arguments and argument "destination" are deprecated. nn.Module.state_dict will not accept them in the future. Refer to https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict for details.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py:1383: UserWarning: positional arguments and argument "destination" are deprecated. nn.Module.state_dict will not accept them in the future. Refer to https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict for details.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py:1383: UserWarning: positional arguments and argument "destination" are deprecated. nn.Module.state_dict will not accept them in the future. Refer to https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict for details.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py:1383: UserWarning: positional arguments and argument "destination" are deprecated. nn.Module.state_dict will not accept them in the future. Refer to https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict for details.
+  warnings.warn(
+Data directory: one_class_train
+=> also loaded optimizer from checkpoint '/home/data/Weight/sy_imagenet/checkpoints/ckpt.pth.tar' (Epoch 70)
+Data directory: one_class_train
+Train root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_train
+Test root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_test
+Data directory: one_class_test
+Data directory: one_class_train
+Train root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_train
+Test root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_test
+Train root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_train
+Test root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_test
+Data directory: one_class_test
+Train root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_train
+Test root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_test
+Data directory: one_class_test
+Train root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_train
+Test root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_test
+Train root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_train
+Test root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_test
+Data directory: one_class_train
+Train root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_train
+Test root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_test
+Data directory: one_class_test
+Train root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_train
+Test root directory: /home/data/anomaly_detection/semantic/imagenet30/one_class_test
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:371: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:371: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:371: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:371: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+[2023-08-19 17:54:40,994][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1401/20000]	Time 12.38 (12.38)	Data 5.64 (5.64)	Loss 10.29580 (10.29580)	LR 0.00100	
+[2023-08-19 17:54:42,755][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1402/20000]	Time 1.71 (1.71)	Data 0.00 (0.00)	Loss 15.33800 (15.33800)	LR 0.00100	
+[2023-08-19 17:54:44,282][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1403/20000]	Time 1.53 (1.53)	Data 0.00 (0.00)	Loss 14.21688 (14.21688)	LR 0.00100	
+[2023-08-19 17:54:45,895][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1404/20000]	Time 1.61 (1.61)	Data 0.00 (0.00)	Loss 13.06863 (13.06863)	LR 0.00100	
+[2023-08-19 17:54:47,478][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1405/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 12.36112 (12.36112)	LR 0.00100	
+[2023-08-19 17:54:49,049][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1406/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 11.76741 (11.76741)	LR 0.00100	
+[2023-08-19 17:54:50,607][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1407/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 11.44341 (11.44341)	LR 0.00100	
+[2023-08-19 17:54:52,345][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1408/20000]	Time 1.74 (1.74)	Data 0.00 (0.00)	Loss 11.17356 (11.17356)	LR 0.00100	
+[2023-08-19 17:54:53,995][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1409/20000]	Time 1.65 (1.65)	Data 0.00 (0.00)	Loss 11.04512 (11.04512)	LR 0.00100	
+[2023-08-19 17:54:55,684][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1410/20000]	Time 1.69 (1.69)	Data 0.00 (0.00)	Loss 10.88487 (10.88487)	LR 0.00100	
+[2023-08-19 17:54:57,234][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1411/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 10.75014 (10.75014)	LR 0.00100	
+[2023-08-19 17:54:58,855][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1412/20000]	Time 1.62 (1.62)	Data 0.00 (0.00)	Loss 10.66264 (10.66264)	LR 0.00100	
+[2023-08-19 17:55:00,521][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1413/20000]	Time 1.67 (1.67)	Data 0.00 (0.00)	Loss 10.62226 (10.62226)	LR 0.00100	
+[2023-08-19 17:55:02,138][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1414/20000]	Time 1.62 (1.62)	Data 0.00 (0.00)	Loss 10.56928 (10.56928)	LR 0.00100	
+[2023-08-19 17:55:03,747][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1415/20000]	Time 1.61 (1.61)	Data 0.00 (0.00)	Loss 10.49725 (10.49725)	LR 0.00100	
+[2023-08-19 17:55:05,300][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1416/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 10.43220 (10.43220)	LR 0.00100	
+[2023-08-19 17:55:06,829][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1417/20000]	Time 1.53 (1.53)	Data 0.00 (0.00)	Loss 10.39172 (10.39172)	LR 0.00100	
+[2023-08-19 17:55:08,448][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1418/20000]	Time 1.62 (1.62)	Data 0.00 (0.00)	Loss 10.32599 (10.32599)	LR 0.00100	
+[2023-08-19 17:55:10,064][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1419/20000]	Time 1.61 (1.61)	Data 0.00 (0.00)	Loss 10.36104 (10.36104)	LR 0.00100	
+[2023-08-19 17:55:10,905][   train_val.py][line: 230][    INFO] Epoch: [71/1000]	Iter: [1420/20000]	Time 0.84 (0.84)	Data 0.00 (0.00)	Loss 10.51129 (10.51129)	LR 0.00100	
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:156: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:156: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:156: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+/usr/local/lib/python3.8/dist-packages/torch/optim/lr_scheduler.py:156: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+[2023-08-19 17:55:16,508][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1421/20000]	Time 5.42 (5.42)	Data 3.62 (3.62)	Loss 10.37476 (10.37476)	LR 0.00100	
+[2023-08-19 17:55:18,401][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1422/20000]	Time 1.89 (1.89)	Data 0.00 (0.00)	Loss 10.29510 (10.29510)	LR 0.00100	
+[2023-08-19 17:55:20,363][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1423/20000]	Time 1.96 (1.96)	Data 0.00 (0.00)	Loss 10.28551 (10.28551)	LR 0.00100	
+[2023-08-19 17:55:21,851][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1424/20000]	Time 1.49 (1.49)	Data 0.00 (0.00)	Loss 10.22842 (10.22842)	LR 0.00100	
+[2023-08-19 17:55:23,430][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1425/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 10.27014 (10.27014)	LR 0.00100	
+[2023-08-19 17:55:25,045][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1426/20000]	Time 1.61 (1.61)	Data 0.00 (0.00)	Loss 10.19298 (10.19298)	LR 0.00100	
+[2023-08-19 17:55:26,649][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1427/20000]	Time 1.60 (1.60)	Data 0.00 (0.00)	Loss 10.25436 (10.25436)	LR 0.00100	
+[2023-08-19 17:55:28,247][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1428/20000]	Time 1.60 (1.60)	Data 0.00 (0.00)	Loss 10.22765 (10.22765)	LR 0.00100	
+[2023-08-19 17:55:29,821][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1429/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 10.15487 (10.15487)	LR 0.00100	
+[2023-08-19 17:55:31,393][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1430/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 10.18671 (10.18671)	LR 0.00100	
+[2023-08-19 17:55:32,985][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1431/20000]	Time 1.59 (1.59)	Data 0.00 (0.00)	Loss 10.17326 (10.17326)	LR 0.00100	
+[2023-08-19 17:55:34,542][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1432/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 10.09885 (10.09885)	LR 0.00100	
+[2023-08-19 17:55:36,042][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1433/20000]	Time 1.50 (1.50)	Data 0.00 (0.00)	Loss 10.10725 (10.10725)	LR 0.00100	
+[2023-08-19 17:55:37,532][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1434/20000]	Time 1.49 (1.49)	Data 0.00 (0.00)	Loss 10.09255 (10.09255)	LR 0.00100	
+[2023-08-19 17:55:39,013][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1435/20000]	Time 1.48 (1.48)	Data 0.00 (0.00)	Loss 10.14965 (10.14965)	LR 0.00100	
+[2023-08-19 17:55:40,510][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1436/20000]	Time 1.50 (1.50)	Data 0.00 (0.00)	Loss 10.04963 (10.04963)	LR 0.00100	
+[2023-08-19 17:55:42,001][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1437/20000]	Time 1.49 (1.49)	Data 0.00 (0.00)	Loss 10.05339 (10.05339)	LR 0.00100	
+[2023-08-19 17:55:43,507][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1438/20000]	Time 1.50 (1.50)	Data 0.00 (0.00)	Loss 10.03198 (10.03198)	LR 0.00100	
+[2023-08-19 17:55:45,007][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1439/20000]	Time 1.50 (1.50)	Data 0.00 (0.00)	Loss 10.09072 (10.09072)	LR 0.00100	
+[2023-08-19 17:55:45,194][   train_val.py][line: 230][    INFO] Epoch: [72/1000]	Iter: [1440/20000]	Time 0.19 (0.19)	Data 0.00 (0.00)	Loss 10.16015 (10.16015)	LR 0.00100	
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+[2023-08-19 17:55:50,723][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1441/20000]	Time 5.32 (5.32)	Data 3.68 (3.68)	Loss 10.10151 (10.10151)	LR 0.00100	
+[2023-08-19 17:55:52,493][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1442/20000]	Time 1.77 (1.77)	Data 0.00 (0.00)	Loss 10.08673 (10.08673)	LR 0.00100	
+[2023-08-19 17:55:54,026][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1443/20000]	Time 1.53 (1.53)	Data 0.00 (0.00)	Loss 9.97748 (9.97748)	LR 0.00100	
+[2023-08-19 17:55:55,665][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1444/20000]	Time 1.64 (1.64)	Data 0.00 (0.00)	Loss 9.99764 (9.99764)	LR 0.00100	
+[2023-08-19 17:55:57,235][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1445/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 10.00482 (10.00482)	LR 0.00100	
+[2023-08-19 17:55:58,813][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1446/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 9.91658 (9.91658)	LR 0.00100	
+[2023-08-19 17:56:00,411][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1447/20000]	Time 1.60 (1.60)	Data 0.00 (0.00)	Loss 9.97396 (9.97396)	LR 0.00100	
+[2023-08-19 17:56:01,992][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1448/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 9.94925 (9.94925)	LR 0.00100	
+[2023-08-19 17:56:03,523][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1449/20000]	Time 1.53 (1.53)	Data 0.00 (0.00)	Loss 9.99917 (9.99917)	LR 0.00100	
+[2023-08-19 17:56:05,076][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1450/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 9.94965 (9.94965)	LR 0.00100	
+[2023-08-19 17:56:06,682][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1451/20000]	Time 1.60 (1.60)	Data 0.00 (0.00)	Loss 9.95993 (9.95993)	LR 0.00100	
+[2023-08-19 17:56:08,222][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1452/20000]	Time 1.54 (1.54)	Data 0.00 (0.00)	Loss 9.91901 (9.91901)	LR 0.00100	
+[2023-08-19 17:56:09,676][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1453/20000]	Time 1.45 (1.45)	Data 0.00 (0.00)	Loss 9.87679 (9.87679)	LR 0.00100	
+[2023-08-19 17:56:11,164][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1454/20000]	Time 1.49 (1.49)	Data 0.00 (0.00)	Loss 9.91740 (9.91740)	LR 0.00100	
+[2023-08-19 17:56:12,623][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1455/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.91667 (9.91667)	LR 0.00100	
+[2023-08-19 17:56:14,082][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1456/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.97369 (9.97369)	LR 0.00100	
+[2023-08-19 17:56:15,554][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1457/20000]	Time 1.47 (1.47)	Data 0.00 (0.00)	Loss 9.98652 (9.98652)	LR 0.00100	
+[2023-08-19 17:56:17,068][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1458/20000]	Time 1.51 (1.51)	Data 0.00 (0.00)	Loss 9.91654 (9.91654)	LR 0.00100	
+[2023-08-19 17:56:18,549][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1459/20000]	Time 1.48 (1.48)	Data 0.00 (0.00)	Loss 9.88354 (9.88354)	LR 0.00100	
+[2023-08-19 17:56:18,733][   train_val.py][line: 230][    INFO] Epoch: [73/1000]	Iter: [1460/20000]	Time 0.18 (0.18)	Data 0.00 (0.00)	Loss 10.03588 (10.03588)	LR 0.00100	
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+[2023-08-19 17:56:24,425][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1461/20000]	Time 5.50 (5.50)	Data 3.48 (3.48)	Loss 9.89006 (9.89006)	LR 0.00100	
+[2023-08-19 17:56:26,055][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1462/20000]	Time 1.63 (1.63)	Data 0.00 (0.00)	Loss 9.84985 (9.84985)	LR 0.00100	
+[2023-08-19 17:56:27,541][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1463/20000]	Time 1.49 (1.49)	Data 0.00 (0.00)	Loss 9.82886 (9.82886)	LR 0.00100	
+[2023-08-19 17:56:29,195][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1464/20000]	Time 1.65 (1.65)	Data 0.00 (0.00)	Loss 9.83121 (9.83121)	LR 0.00100	
+[2023-08-19 17:56:30,750][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1465/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 9.90282 (9.90282)	LR 0.00100	
+[2023-08-19 17:56:32,382][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1466/20000]	Time 1.63 (1.63)	Data 0.00 (0.00)	Loss 9.82204 (9.82204)	LR 0.00100	
+[2023-08-19 17:56:33,940][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1467/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.83490 (9.83490)	LR 0.00100	
+[2023-08-19 17:56:35,496][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1468/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.80943 (9.80943)	LR 0.00100	
+[2023-08-19 17:56:37,065][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1469/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 9.79161 (9.79161)	LR 0.00100	
+[2023-08-19 17:56:38,603][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1470/20000]	Time 1.54 (1.54)	Data 0.00 (0.00)	Loss 9.78299 (9.78299)	LR 0.00100	
+[2023-08-19 17:56:40,179][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1471/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 9.77732 (9.77732)	LR 0.00100	
+[2023-08-19 17:56:41,697][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1472/20000]	Time 1.52 (1.52)	Data 0.00 (0.00)	Loss 9.83264 (9.83264)	LR 0.00100	
+[2023-08-19 17:56:43,187][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1473/20000]	Time 1.49 (1.49)	Data 0.00 (0.00)	Loss 9.83498 (9.83498)	LR 0.00100	
+[2023-08-19 17:56:44,675][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1474/20000]	Time 1.49 (1.49)	Data 0.00 (0.00)	Loss 9.73183 (9.73183)	LR 0.00100	
+[2023-08-19 17:56:46,186][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1475/20000]	Time 1.51 (1.51)	Data 0.00 (0.00)	Loss 9.77071 (9.77071)	LR 0.00100	
+[2023-08-19 17:56:47,716][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1476/20000]	Time 1.53 (1.53)	Data 0.00 (0.00)	Loss 9.78942 (9.78942)	LR 0.00100	
+[2023-08-19 17:56:49,235][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1477/20000]	Time 1.52 (1.52)	Data 0.00 (0.00)	Loss 9.74870 (9.74870)	LR 0.00100	
+[2023-08-19 17:56:50,716][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1478/20000]	Time 1.48 (1.48)	Data 0.00 (0.00)	Loss 9.73688 (9.73688)	LR 0.00100	
+[2023-08-19 17:56:52,236][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1479/20000]	Time 1.52 (1.52)	Data 0.00 (0.00)	Loss 9.72181 (9.72181)	LR 0.00100	
+[2023-08-19 17:56:52,418][   train_val.py][line: 230][    INFO] Epoch: [74/1000]	Iter: [1480/20000]	Time 0.18 (0.18)	Data 0.00 (0.00)	Loss 9.35216 (9.35216)	LR 0.00100	
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+[2023-08-19 17:56:57,751][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1481/20000]	Time 5.13 (5.13)	Data 3.50 (3.50)	Loss 9.74916 (9.74916)	LR 0.00100	
+[2023-08-19 17:56:59,488][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1482/20000]	Time 1.74 (1.74)	Data 0.00 (0.00)	Loss 9.71939 (9.71939)	LR 0.00100	
+[2023-08-19 17:57:01,058][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1483/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 9.68917 (9.68917)	LR 0.00100	
+[2023-08-19 17:57:02,655][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1484/20000]	Time 1.60 (1.60)	Data 0.00 (0.00)	Loss 9.74616 (9.74616)	LR 0.00100	
+[2023-08-19 17:57:04,209][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1485/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 9.61978 (9.61978)	LR 0.00100	
+[2023-08-19 17:57:05,767][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1486/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.70788 (9.70788)	LR 0.00100	
+[2023-08-19 17:57:07,363][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1487/20000]	Time 1.60 (1.60)	Data 0.00 (0.00)	Loss 9.62618 (9.62618)	LR 0.00100	
+[2023-08-19 17:57:08,921][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1488/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.65214 (9.65214)	LR 0.00100	
+[2023-08-19 17:57:10,484][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1489/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.72487 (9.72487)	LR 0.00100	
+[2023-08-19 17:57:12,200][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1490/20000]	Time 1.72 (1.72)	Data 0.00 (0.00)	Loss 9.68737 (9.68737)	LR 0.00100	
+[2023-08-19 17:57:13,741][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1491/20000]	Time 1.54 (1.54)	Data 0.00 (0.00)	Loss 9.65516 (9.65516)	LR 0.00100	
+[2023-08-19 17:57:15,312][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1492/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 9.66199 (9.66199)	LR 0.00100	
+[2023-08-19 17:57:16,775][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1493/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.63017 (9.63017)	LR 0.00100	
+[2023-08-19 17:57:18,234][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1494/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.65543 (9.65543)	LR 0.00100	
+[2023-08-19 17:57:19,692][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1495/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.66472 (9.66472)	LR 0.00100	
+[2023-08-19 17:57:21,153][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1496/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.66809 (9.66809)	LR 0.00100	
+[2023-08-19 17:57:22,612][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1497/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.63333 (9.63333)	LR 0.00100	
+[2023-08-19 17:57:24,071][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1498/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.58281 (9.58281)	LR 0.00100	
+[2023-08-19 17:57:25,525][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1499/20000]	Time 1.45 (1.45)	Data 0.00 (0.00)	Loss 9.56954 (9.56954)	LR 0.00100	
+[2023-08-19 17:57:25,709][   train_val.py][line: 230][    INFO] Epoch: [75/1000]	Iter: [1500/20000]	Time 0.18 (0.18)	Data 0.00 (0.00)	Loss 9.55302 (9.55302)	LR 0.00100	
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+[2023-08-19 17:57:31,201][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1501/20000]	Time 5.29 (5.29)	Data 3.69 (3.69)	Loss 9.70093 (9.70093)	LR 0.00100	
+[2023-08-19 17:57:32,861][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1502/20000]	Time 1.66 (1.66)	Data 0.00 (0.00)	Loss 9.60763 (9.60763)	LR 0.00100	
+[2023-08-19 17:57:34,328][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1503/20000]	Time 1.47 (1.47)	Data 0.00 (0.00)	Loss 9.55394 (9.55394)	LR 0.00100	
+[2023-08-19 17:57:35,922][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1504/20000]	Time 1.59 (1.59)	Data 0.00 (0.00)	Loss 9.58475 (9.58475)	LR 0.00100	
+[2023-08-19 17:57:37,504][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1505/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 9.55623 (9.55623)	LR 0.00100	
+[2023-08-19 17:57:39,031][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1506/20000]	Time 1.53 (1.53)	Data 0.00 (0.00)	Loss 9.62953 (9.62953)	LR 0.00100	
+[2023-08-19 17:57:40,592][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1507/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.51119 (9.51119)	LR 0.00100	
+[2023-08-19 17:57:42,125][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1508/20000]	Time 1.53 (1.53)	Data 0.00 (0.00)	Loss 9.51958 (9.51958)	LR 0.00100	
+[2023-08-19 17:57:43,693][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1509/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 9.60657 (9.60657)	LR 0.00100	
+[2023-08-19 17:57:45,271][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1510/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 9.49272 (9.49272)	LR 0.00100	
+[2023-08-19 17:57:46,824][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1511/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 9.54882 (9.54882)	LR 0.00100	
+[2023-08-19 17:57:48,389][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1512/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.45371 (9.45371)	LR 0.00100	
+[2023-08-19 17:57:49,847][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1513/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.46491 (9.46491)	LR 0.00100	
+[2023-08-19 17:57:51,307][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1514/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.42037 (9.42037)	LR 0.00100	
+[2023-08-19 17:57:52,775][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1515/20000]	Time 1.47 (1.47)	Data 0.00 (0.00)	Loss 9.47224 (9.47224)	LR 0.00100	
+[2023-08-19 17:57:54,246][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1516/20000]	Time 1.47 (1.47)	Data 0.00 (0.00)	Loss 9.52680 (9.52680)	LR 0.00100	
+[2023-08-19 17:57:55,703][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1517/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.46948 (9.46948)	LR 0.00100	
+[2023-08-19 17:57:57,156][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1518/20000]	Time 1.45 (1.45)	Data 0.00 (0.00)	Loss 9.50483 (9.50483)	LR 0.00100	
+[2023-08-19 17:57:58,618][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1519/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.48034 (9.48034)	LR 0.00100	
+[2023-08-19 17:57:58,803][   train_val.py][line: 230][    INFO] Epoch: [76/1000]	Iter: [1520/20000]	Time 0.18 (0.18)	Data 0.00 (0.00)	Loss 9.60676 (9.60676)	LR 0.00100	
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+[2023-08-19 17:58:04,652][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1521/20000]	Time 5.67 (5.67)	Data 3.95 (3.95)	Loss 9.44513 (9.44513)	LR 0.00100	
+[2023-08-19 17:58:06,409][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1522/20000]	Time 1.76 (1.76)	Data 0.00 (0.00)	Loss 9.48413 (9.48413)	LR 0.00100	
+[2023-08-19 17:58:07,993][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1523/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 9.45451 (9.45451)	LR 0.00100	
+[2023-08-19 17:58:09,833][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1524/20000]	Time 1.84 (1.84)	Data 0.00 (0.00)	Loss 9.50068 (9.50068)	LR 0.00100	
+[2023-08-19 17:58:11,433][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1525/20000]	Time 1.60 (1.60)	Data 0.00 (0.00)	Loss 9.46391 (9.46391)	LR 0.00100	
+[2023-08-19 17:58:12,988][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1526/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 9.47777 (9.47777)	LR 0.00100	
+[2023-08-19 17:58:14,565][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1527/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 9.39929 (9.39929)	LR 0.00100	
+[2023-08-19 17:58:16,111][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1528/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 9.45664 (9.45664)	LR 0.00100	
+[2023-08-19 17:58:17,699][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1529/20000]	Time 1.59 (1.59)	Data 0.00 (0.00)	Loss 9.41912 (9.41912)	LR 0.00100	
+[2023-08-19 17:58:19,313][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1530/20000]	Time 1.61 (1.61)	Data 0.00 (0.00)	Loss 9.37900 (9.37900)	LR 0.00100	
+[2023-08-19 17:58:21,218][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1531/20000]	Time 1.90 (1.90)	Data 0.00 (0.00)	Loss 9.39776 (9.39776)	LR 0.00100	
+[2023-08-19 17:58:22,853][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1532/20000]	Time 1.63 (1.63)	Data 0.00 (0.00)	Loss 9.40215 (9.40215)	LR 0.00100	
+[2023-08-19 17:58:24,353][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1533/20000]	Time 1.50 (1.50)	Data 0.00 (0.00)	Loss 9.37631 (9.37631)	LR 0.00100	
+[2023-08-19 17:58:25,812][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1534/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.35183 (9.35183)	LR 0.00100	
+[2023-08-19 17:58:27,272][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1535/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.33416 (9.33416)	LR 0.00100	
+[2023-08-19 17:58:28,728][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1536/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.31347 (9.31347)	LR 0.00100	
+[2023-08-19 17:58:30,182][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1537/20000]	Time 1.45 (1.45)	Data 0.00 (0.00)	Loss 9.34142 (9.34142)	LR 0.00100	
+[2023-08-19 17:58:31,639][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1538/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.38935 (9.38935)	LR 0.00100	
+[2023-08-19 17:58:33,100][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1539/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.35320 (9.35320)	LR 0.00100	
+[2023-08-19 17:58:33,288][   train_val.py][line: 230][    INFO] Epoch: [77/1000]	Iter: [1540/20000]	Time 0.19 (0.19)	Data 0.00 (0.00)	Loss 9.21472 (9.21472)	LR 0.00100	
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+[2023-08-19 17:58:38,798][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1541/20000]	Time 5.33 (5.33)	Data 3.26 (3.26)	Loss 9.33268 (9.33268)	LR 0.00100	
+[2023-08-19 17:58:40,516][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1542/20000]	Time 1.72 (1.72)	Data 0.00 (0.00)	Loss 9.35408 (9.35408)	LR 0.00100	
+[2023-08-19 17:58:42,264][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1543/20000]	Time 1.75 (1.75)	Data 0.00 (0.00)	Loss 9.32378 (9.32378)	LR 0.00100	
+[2023-08-19 17:58:43,827][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1544/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.29025 (9.29025)	LR 0.00100	
+[2023-08-19 17:58:45,406][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1545/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 9.28733 (9.28733)	LR 0.00100	
+[2023-08-19 17:58:46,944][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1546/20000]	Time 1.54 (1.54)	Data 0.00 (0.00)	Loss 9.30356 (9.30356)	LR 0.00100	
+[2023-08-19 17:58:48,475][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1547/20000]	Time 1.53 (1.53)	Data 0.00 (0.00)	Loss 9.37626 (9.37626)	LR 0.00100	
+[2023-08-19 17:58:50,061][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1548/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 9.27883 (9.27883)	LR 0.00100	
+[2023-08-19 17:58:51,681][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1549/20000]	Time 1.62 (1.62)	Data 0.00 (0.00)	Loss 9.24439 (9.24439)	LR 0.00100	
+[2023-08-19 17:58:53,257][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1550/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 9.28768 (9.28768)	LR 0.00100	
+[2023-08-19 17:58:54,840][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1551/20000]	Time 1.58 (1.58)	Data 0.00 (0.00)	Loss 9.31201 (9.31201)	LR 0.00100	
+[2023-08-19 17:58:56,441][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1552/20000]	Time 1.60 (1.60)	Data 0.00 (0.00)	Loss 9.28247 (9.28247)	LR 0.00100	
+[2023-08-19 17:58:57,996][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1553/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 9.31827 (9.31827)	LR 0.00100	
+[2023-08-19 17:58:59,453][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1554/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.26131 (9.26131)	LR 0.00100	
+[2023-08-19 17:59:00,912][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1555/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.29329 (9.29329)	LR 0.00100	
+[2023-08-19 17:59:02,372][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1556/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.22418 (9.22418)	LR 0.00100	
+[2023-08-19 17:59:03,828][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1557/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.20994 (9.20994)	LR 0.00100	
+[2023-08-19 17:59:05,292][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1558/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.25643 (9.25643)	LR 0.00100	
+[2023-08-19 17:59:06,759][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1559/20000]	Time 1.47 (1.47)	Data 0.00 (0.00)	Loss 9.19851 (9.19851)	LR 0.00100	
+[2023-08-19 17:59:06,944][   train_val.py][line: 230][    INFO] Epoch: [78/1000]	Iter: [1560/20000]	Time 0.18 (0.18)	Data 0.00 (0.00)	Loss 9.04736 (9.04736)	LR 0.00100	
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+[2023-08-19 17:59:12,407][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1561/20000]	Time 5.26 (5.26)	Data 3.72 (3.72)	Loss 9.25178 (9.25178)	LR 0.00100	
+[2023-08-19 17:59:14,053][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1562/20000]	Time 1.64 (1.64)	Data 0.00 (0.00)	Loss 9.20927 (9.20927)	LR 0.00100	
+[2023-08-19 17:59:15,564][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1563/20000]	Time 1.51 (1.51)	Data 0.00 (0.00)	Loss 9.19611 (9.19611)	LR 0.00100	
+[2023-08-19 17:59:17,226][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1564/20000]	Time 1.66 (1.66)	Data 0.00 (0.00)	Loss 9.19532 (9.19532)	LR 0.00100	
+[2023-08-19 17:59:19,085][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1565/20000]	Time 1.86 (1.86)	Data 0.00 (0.00)	Loss 9.21431 (9.21431)	LR 0.00100	
+[2023-08-19 17:59:20,809][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1566/20000]	Time 1.72 (1.72)	Data 0.00 (0.00)	Loss 9.12419 (9.12419)	LR 0.00100	
+[2023-08-19 17:59:22,381][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1567/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 9.14926 (9.14926)	LR 0.00100	
+[2023-08-19 17:59:23,953][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1568/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 9.24856 (9.24856)	LR 0.00100	
+[2023-08-19 17:59:25,496][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1569/20000]	Time 1.54 (1.54)	Data 0.00 (0.00)	Loss 9.21181 (9.21181)	LR 0.00100	
+[2023-08-19 17:59:27,082][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1570/20000]	Time 1.59 (1.59)	Data 0.00 (0.00)	Loss 9.12237 (9.12237)	LR 0.00100	
+[2023-08-19 17:59:28,634][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1571/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 9.16977 (9.16977)	LR 0.00100	
+[2023-08-19 17:59:30,233][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1572/20000]	Time 1.60 (1.60)	Data 0.00 (0.00)	Loss 9.11945 (9.11945)	LR 0.00100	
+[2023-08-19 17:59:31,792][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1573/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.15595 (9.15595)	LR 0.00100	
+[2023-08-19 17:59:33,357][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1574/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.16336 (9.16336)	LR 0.00100	
+[2023-08-19 17:59:34,821][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1575/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.13326 (9.13326)	LR 0.00100	
+[2023-08-19 17:59:36,283][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1576/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.11312 (9.11312)	LR 0.00100	
+[2023-08-19 17:59:37,744][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1577/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.11363 (9.11363)	LR 0.00100	
+[2023-08-19 17:59:39,198][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1578/20000]	Time 1.45 (1.45)	Data 0.00 (0.00)	Loss 9.12958 (9.12958)	LR 0.00100	
+[2023-08-19 17:59:40,656][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1579/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.08188 (9.08188)	LR 0.00100	
+[2023-08-19 17:59:40,843][   train_val.py][line: 230][    INFO] Epoch: [79/1000]	Iter: [1580/20000]	Time 0.19 (0.19)	Data 0.00 (0.00)	Loss 8.99455 (8.99455)	LR 0.00100	
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+[2023-08-19 17:59:46,327][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1581/20000]	Time 5.29 (5.29)	Data 3.41 (3.41)	Loss 9.05129 (9.05129)	LR 0.00100	
+[2023-08-19 17:59:47,974][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1582/20000]	Time 1.65 (1.65)	Data 0.00 (0.00)	Loss 9.03915 (9.03915)	LR 0.00100	
+[2023-08-19 17:59:49,486][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1583/20000]	Time 1.51 (1.51)	Data 0.00 (0.00)	Loss 9.08140 (9.08140)	LR 0.00100	
+[2023-08-19 17:59:51,169][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1584/20000]	Time 1.68 (1.68)	Data 0.00 (0.00)	Loss 9.09977 (9.09977)	LR 0.00100	
+[2023-08-19 17:59:52,715][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1585/20000]	Time 1.54 (1.54)	Data 0.00 (0.00)	Loss 9.06114 (9.06114)	LR 0.00100	
+[2023-08-19 17:59:54,322][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1586/20000]	Time 1.61 (1.61)	Data 0.00 (0.00)	Loss 9.10771 (9.10771)	LR 0.00100	
+[2023-08-19 17:59:55,929][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1587/20000]	Time 1.61 (1.61)	Data 0.00 (0.00)	Loss 9.06785 (9.06785)	LR 0.00100	
+[2023-08-19 17:59:57,477][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1588/20000]	Time 1.55 (1.55)	Data 0.00 (0.00)	Loss 9.09661 (9.09661)	LR 0.00100	
+[2023-08-19 17:59:59,069][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1589/20000]	Time 1.59 (1.59)	Data 0.00 (0.00)	Loss 9.06132 (9.06132)	LR 0.00100	
+[2023-08-19 18:00:00,641][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1590/20000]	Time 1.57 (1.57)	Data 0.00 (0.00)	Loss 9.00719 (9.00719)	LR 0.00100	
+[2023-08-19 18:00:02,198][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1591/20000]	Time 1.56 (1.56)	Data 0.00 (0.00)	Loss 9.02518 (9.02518)	LR 0.00100	
+[2023-08-19 18:00:03,732][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1592/20000]	Time 1.53 (1.53)	Data 0.00 (0.00)	Loss 9.02631 (9.02631)	LR 0.00100	
+[2023-08-19 18:00:05,227][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1593/20000]	Time 1.49 (1.49)	Data 0.00 (0.00)	Loss 8.98297 (8.98297)	LR 0.00100	
+[2023-08-19 18:00:06,718][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1594/20000]	Time 1.49 (1.49)	Data 0.00 (0.00)	Loss 9.02267 (9.02267)	LR 0.00100	
+[2023-08-19 18:00:08,197][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1595/20000]	Time 1.48 (1.48)	Data 0.00 (0.00)	Loss 9.06305 (9.06305)	LR 0.00100	
+[2023-08-19 18:00:09,692][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1596/20000]	Time 1.49 (1.49)	Data 0.00 (0.00)	Loss 8.95158 (8.95158)	LR 0.00100	
+[2023-08-19 18:00:11,148][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1597/20000]	Time 1.46 (1.46)	Data 0.00 (0.00)	Loss 9.00959 (9.00959)	LR 0.00100	
+[2023-08-19 18:00:12,666][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1598/20000]	Time 1.52 (1.52)	Data 0.00 (0.00)	Loss 9.07236 (9.07236)	LR 0.00100	
+[2023-08-19 18:00:14,147][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1599/20000]	Time 1.48 (1.48)	Data 0.00 (0.00)	Loss 8.97754 (8.97754)	LR 0.00100	
+[2023-08-19 18:00:14,328][   train_val.py][line: 230][    INFO] Epoch: [80/1000]	Iter: [1600/20000]	Time 0.18 (0.18)	Data 0.00 (0.00)	Loss 9.34555 (9.34555)	LR 0.00100	
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+[2023-08-19 18:00:45,830][   train_val.py][line: 285][    INFO] Test: [1/2]	Time 31.346 (31.346)
+[2023-08-19 18:00:58,770][   train_val.py][line: 285][    INFO] Test: [2/2]	Time 12.940 (22.143)
+[2023-08-19 18:00:59,868][   train_val.py][line: 301][    INFO] Gathering final results ...
+[2023-08-19 18:00:59,868][   train_val.py][line: 303][    INFO]  * Loss 8.36871	total_num=3000.0
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+Traceback (most recent call last):
+  File "../../tools/train_val.py", line 329, in <module>
+    main()
+  File "../../tools/train_val.py", line 148, in main
+    ret_metrics = validate(val_loader, model)
+  File "../../tools/train_val.py", line 304, in validate
+    fileinfos, preds, masks = merge_together(config.evaluator.eval_dir)
+  File "/home/workspace/UniAD/utils/eval_helper.py", line 47, in merge_together
+    "height": npz["height"],
+  File "/usr/local/lib/python3.8/dist-packages/numpy/lib/npyio.py", line 239, in __getitem__
+    magic = bytes.read(len(format.MAGIC_PREFIX))
+  File "/usr/lib/python3.8/zipfile.py", line 940, in read
+    data = self._read1(n)
+  File "/usr/lib/python3.8/zipfile.py", line 1030, in _read1
+    self._update_crc(data)
+  File "/usr/lib/python3.8/zipfile.py", line 958, in _update_crc
+    raise BadZipFile("Bad CRC-32 for file %r" % self.name)
+zipfile.BadZipFile: Bad CRC-32 for file 'height.npy'
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 372743 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 372744 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 372745 closing signal SIGTERM
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 372742) of binary: /usr/local/bin/python
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launch.py", line 193, in <module>
+    main()
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launch.py", line 189, in main
+    launch(args)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launch.py", line 174, in launch
+    run(args)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/run.py", line 752, in run
+    elastic_launch(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launcher/api.py", line 131, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launcher/api.py", line 245, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+../../tools/train_val.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2023-08-19_18:01:11
+  host      : sy_uniAD
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 372742)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
