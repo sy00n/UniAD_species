@@ -15,7 +15,7 @@ from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
 from torch.utils.data.sampler import RandomSampler
 
-random_seed = 42
+random_seed = 666
 print("Random Seed: ", random_seed)
 logger = logging.getLogger("global_logger")
 classes = [
