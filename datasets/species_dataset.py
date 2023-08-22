@@ -14,6 +14,9 @@ from datasets.transforms import RandomColorJitter
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
 from torch.utils.data.sampler import RandomSampler
+
+random_seed = 666
+print("Random Seed: ", random_seed)
 logger = logging.getLogger("global_logger")
 classes = [
     "abudefduf_vaigiensis", "acanthurus_coeruleus", "acarospora_socialis", "acris_gryllus", "adolphia_californica",
@@ -65,9 +68,10 @@ def build_species_dataloader(cfg, training, distributed=True):
         sampler=sampler,
     )
     #logger.info("building CustomDataset from: {}".format(cfg["meta_file"]))
-    print("Train root directory:", cfg["train"]["root_dir"])
-    print("Test root directory:", cfg["test"]["root_dir"])
+
+
     return data_loader
+
 class SpeciesDataset(BaseDataset):
     def __init__(
         self,
@@ -87,10 +91,22 @@ class SpeciesDataset(BaseDataset):
         self.classes = classes
         self.num_classes = len(classes)
         self.root = root_dir
-        # Divide classes into normal and abnormal
-        num_normal = self.num_classes // 2
-        self.normals = self.classes[:num_normal]
-        self.abnormals = self.classes[num_normal:]
+
+        ## class 명 기준 절반으로 나누기
+        # num_normal = self.num_classes // 2
+        # self.normals = self.classes[:num_normal]
+        # self.abnormals = self.classes[num_normal:]
+
+        ## random seed로 30개 class를 랜덤으로 지정하기
+        if random_seed is not None:
+            random.seed(random_seed)
+            random.shuffle(self.classes)  
+        
+        num_normals = 30  
+        self.normals = random.sample(self.classes, num_normals)
+        self.abnormals = [cls for cls in self.classes if cls not in self.normals]
+        print('Normal casses: ', self.normals)
+
         self.data = []
         self.targets = []
         data_dir = "one_class_train" if self.training else "one_class_test"
